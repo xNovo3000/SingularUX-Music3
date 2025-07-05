@@ -1,28 +1,22 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.hilt)
 }
 
 android {
-    namespace = "org.singularux.music"
+    namespace = "org.singularux.music.core.ui"
     compileSdk = 36
     buildToolsVersion = "36.0.0"
     defaultConfig {
-        applicationId = "org.singularux.music"
         minSdk = 26
-        targetSdk = 36
-        versionCode = 1
-        versionName = "20250705"
+        consumerProguardFiles("consumer-rules.pro")
     }
     buildTypes {
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -46,14 +40,11 @@ android {
 dependencies {
     // AndroidX
     implementation(libs.androidx.core)
-    implementation(libs.androidx.activity)
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
     // Jetpack Compose
     implementation(platform(libs.jetpack.compose.bom))
     implementation(libs.jetpack.compose.animation)
     implementation(libs.jetpack.compose.foundation)
     implementation(libs.jetpack.compose.runtime)
     implementation(libs.jetpack.compose.ui)
+    implementation(libs.jetpack.compose.material3)
 }
