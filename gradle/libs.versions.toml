@@ -1,0 +1,24 @@
+[versions]
+# Plugins
+agp = "8.11.0"
+kotlin = "2.2.0"
+kotlin-ksp = "2.2.0-2.0.2"
+# Libraries
+androidx-core = "1.16.0"
+jetpack-compose = "2025.06.01"
+
+[libraries]
+# AndroidX
+androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core" }
+# Jetpack Compose
+jetpack-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "jetpack-compose" }
+jetpack-compose-animation = { group = "androidx.compose.animation", name = "animation" }
+jetpack-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+jetpack-compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
+jetpack-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "kotlin-ksp" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
