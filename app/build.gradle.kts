@@ -45,10 +45,13 @@ android {
 
 dependencies {
     // Project
-    api(project(":core:ui"))
+    api(project(":feature:home"))
     // AndroidX
     implementation(libs.androidx.core)
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.activity)
+    implementation(libs.lifecycle.viewmodel)
+    implementation(libs.lifecycle.viewmodel.navigation3)
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
@@ -58,4 +61,7 @@ dependencies {
     implementation(libs.jetpack.compose.foundation)
     implementation(libs.jetpack.compose.runtime)
     implementation(libs.jetpack.compose.ui)
+    // Navigation 3
+    implementation(libs.navigation3.runtime)
+    implementation(libs.navigation3.ui)
 }
