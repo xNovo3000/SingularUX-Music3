@@ -6,14 +6,14 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 
-val displayFontFamily = FontFamily(
+private val displayFontFamily = FontFamily(
     Font(resId = R.font.pt_serif_regular),
     Font(resId = R.font.pt_serif_bold, weight = FontWeight.Medium),
     Font(resId = R.font.pt_serif_regular_italic, style = FontStyle.Italic),
     Font(resId = R.font.pt_serif_bold_italic, weight = FontWeight.Medium, style = FontStyle.Italic)
 )
 
-val bodyFontFamily = FontFamily(
+private val bodyFontFamily = FontFamily(
     Font(resId = R.font.inter_regular),
     Font(resId = R.font.inter_medium, weight = FontWeight.Medium),
     Font(resId = R.font.inter_regular_italic, style = FontStyle.Italic),

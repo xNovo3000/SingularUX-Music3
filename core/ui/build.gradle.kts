@@ -40,6 +40,7 @@ android {
 dependencies {
     // AndroidX
     implementation(libs.androidx.core)
+    implementation(libs.androidx.core.splashscreen)
     // Jetpack Compose
     implementation(platform(libs.jetpack.compose.bom))
     implementation(libs.jetpack.compose.animation)
