@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "org.singularux.music.core.permission"
+    namespace = "org.singularux.music.data.library"
     compileSdk = 36
     buildToolsVersion = "36.0.0"
     defaultConfig {
-        minSdk = 26
+        minSdk = 30
         consumerProguardFiles("consumer-rules.pro")
     }
     buildTypes {
@@ -36,6 +36,8 @@ android {
 }
 
 dependencies {
+    // Project
+    api(project(":core:permission"))
     // AndroidX
     implementation(libs.androidx.core)
     // Hilt

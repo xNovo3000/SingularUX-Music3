@@ -14,7 +14,7 @@ android {
     buildToolsVersion = "36.0.0"
     defaultConfig {
         applicationId = "org.singularux.music"
-        minSdk = 26
+        minSdk = 30
         targetSdk = 36
         versionCode = 1
         versionName = "20250705"
@@ -45,7 +45,7 @@ android {
 
 dependencies {
     // Project
-    implementation(project(":core:ui"))
+    api(project(":core:ui"))
     // AndroidX
     implementation(libs.androidx.core)
     implementation(libs.androidx.activity)
