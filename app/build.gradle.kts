@@ -45,6 +45,7 @@ android {
 
 dependencies {
     // Project
+    api(project(":feature:playback"))
     api(project(":feature:home"))
     // AndroidX
     implementation(libs.androidx.core)
