@@ -3,27 +3,20 @@ package org.singularux.music.feature.playback.foreground
 import android.content.ComponentName
 import android.content.Context
 import android.util.Log
-import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
-import com.google.common.util.concurrent.ListenableFuture
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.guava.await
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.guava.asDeferred
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class MusicControllerFacade(
-    context: Context,
-    private val coroutineScope: CoroutineScope
-) {
+class MusicControllerFacade(context: Context, coroutineScope: CoroutineScope) {
 
     companion object {
         private const val TAG = "MusicControllerFacade"
     }
 
-    private val mediaControllerFuture: ListenableFuture<MediaController>
+    private val mediaControllerDeferred: Deferred<MediaController>
     var mediaController: MediaController? = null
         private set
 
@@ -34,32 +27,16 @@ class MusicControllerFacade(
         // Load async
         val componentName = ComponentName(context, MusicPlaybackService::class.java)
         val sessionToken = SessionToken(context, componentName)
-        mediaControllerFuture = MediaController.Builder(context, sessionToken)
+        mediaControllerDeferred = MediaController.Builder(context, sessionToken)
             .buildAsync()
+            .asDeferred()
         // Retrieve instance
         coroutineScope.launch {
             try {
-                mediaController = mediaControllerFuture.await()
+                mediaController = mediaControllerDeferred.await()
+                Log.d(TAG, "Successfully started MediaController")
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to retrieve the MediaController", e)
-            }
-        }
-    }
-
-    fun addListener(listener: Player.Listener) {
-        coroutineScope.launch {
-            val mediaController = mediaControllerFuture.await()
-            withContext(Dispatchers.Main) {
-                mediaController.addListener(listener)
-            }
-        }
-    }
-
-    fun removeListener(listener: Player.Listener) {
-        coroutineScope.launch {
-            val mediaController = mediaControllerFuture.await()
-            withContext(Dispatchers.Main) {
-                mediaController.removeListener(listener)
             }
         }
     }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="playback_bar_artwork_size">56dp</dimen>
+    <string name="playback_bar_artwork_description">Album artwork</string>
+    <string name="playback_bar_pause">Pause</string>
+    <string name="playback_bar_play">Play</string>
+    <string name="playback_bar_unknown_artist">Unknown artist</string>
+</resources>

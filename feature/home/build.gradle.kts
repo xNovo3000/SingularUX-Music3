@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.hilt)
 }
 
@@ -55,8 +54,9 @@ dependencies {
     implementation(libs.jetpack.compose.foundation)
     implementation(libs.jetpack.compose.runtime)
     implementation(libs.jetpack.compose.ui)
+    // Jetpack Compose - Preview
+    implementation(libs.jetpack.compose.ui.preview)
+    debugImplementation(libs.jetpack.compose.ui.tooling)
     // Jetpack Compose - Material 3
     implementation(libs.jetpack.compose.material3)
-    // KotlinX
-    implementation(libs.kotlinx.serialization.json)
 }

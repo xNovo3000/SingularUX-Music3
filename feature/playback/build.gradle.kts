@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.ksp)
-    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
 }
 
@@ -41,9 +41,23 @@ dependencies {
     api(project(":core:ui"))
     // AndroidX
     implementation(libs.androidx.core)
+    // Coil
+    implementation(libs.coil)
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    // Jetpack Compose
+    implementation(platform(libs.jetpack.compose.bom))
+    implementation(libs.jetpack.compose.animation)
+    implementation(libs.jetpack.compose.foundation)
+    implementation(libs.jetpack.compose.runtime)
+    implementation(libs.jetpack.compose.ui)
+    // Jetpack Compose - Preview
+    implementation(libs.jetpack.compose.ui.preview)
+    debugImplementation(libs.jetpack.compose.ui.tooling)
+    // Jetpack Compose - Material 3
+    implementation(libs.jetpack.compose.material3)
+    implementation(libs.jetpack.compose.material.icons)
     // KotlinX
     implementation(libs.kotlinx.coroutines.guava)
     // Media 3
