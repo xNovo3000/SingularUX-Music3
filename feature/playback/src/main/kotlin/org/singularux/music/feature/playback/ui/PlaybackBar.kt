@@ -5,14 +5,19 @@ import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.material.icons.rounded.PlayArrow
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,6 +46,7 @@ sealed interface PlaybackBarAction {
     data object GoToPlaybackScreen : PlaybackBarAction
 }
 
+@ExperimentalMaterial3ExpressiveApi
 @Composable
 fun PlaybackBar(
     modifier: Modifier = Modifier,
@@ -56,7 +62,12 @@ fun PlaybackBar(
                 }
             )
     ) {
+        LinearProgressIndicator(
+            modifier = Modifier.fillMaxWidth(),
+            progress = { state.progress }
+        )
         ListItem(
+            modifier = Modifier.fillMaxWidth(),
             headlineContent = {
                 Text(text = state.title)
             },
@@ -80,10 +91,19 @@ fun PlaybackBar(
                 )
             },
             trailingContent = {
-                IconButton(
+                FilledIconButton(
+                    modifier = Modifier.size(
+                        size = IconButtonDefaults.smallContainerSize(
+                            widthOption = IconButtonDefaults.IconButtonWidthOption.Wide
+                        )
+                    ),
                     onClick = {
                         onAction(PlaybackBarAction.PlayPause)
-                    }
+                    },
+                    shapes = IconButtonDefaults.shapes(
+                        shape = IconButtonDefaults.smallRoundShape,
+                        pressedShape = IconButtonDefaults.smallSquareShape
+                    )
                 ) {
                     Icon(
                         imageVector = if (state.isPlaying) {
@@ -100,13 +120,17 @@ fun PlaybackBar(
                         )
                     )
                 }
-            }
+            },
+            colors = ListItemDefaults.colors(
+                containerColor = MaterialTheme.colorScheme.surfaceContainer
+            )
         )
     }
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@ExperimentalMaterial3ExpressiveApi
 @Composable
 private fun Preview() {
     MusicTheme {
