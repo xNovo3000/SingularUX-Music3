@@ -22,4 +22,10 @@ class MusicActivity : ComponentActivity() {
         setContent { MusicUI() }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        // Release MediaController
+        musicControllerFacade.release()
+    }
+
 }

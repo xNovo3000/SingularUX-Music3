@@ -32,9 +32,10 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import org.singularux.music.core.ui.MusicTheme
 import org.singularux.music.feature.playback.R
+import org.singularux.music.feature.playback.viewmodel.PlaybackBarViewModel
 
 data class PlaybackBarState(
-    val title: String,
+    val title: String?,
     val artistsName: String?,
     val artworkUri: Uri?,
     val isPlaying: Boolean,
@@ -69,7 +70,9 @@ fun PlaybackBar(
         ListItem(
             modifier = Modifier.fillMaxWidth(),
             headlineContent = {
-                Text(text = state.title)
+                val headlineText = state.title
+                    ?: stringResource(R.string.playback_bar_unknown_track)
+                Text(text = headlineText)
             },
             supportingContent = {
                 val supportText = state.artistsName
@@ -80,7 +83,7 @@ fun PlaybackBar(
                 AsyncImage(
                     modifier = Modifier
                         .size(56.dp)
-                        .clip(RoundedCornerShape(16.dp))
+                        .clip(RoundedCornerShape(12.dp))
                         .background(MaterialTheme.colorScheme.surfaceContainerHighest),
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(state.artworkUri)
@@ -103,7 +106,8 @@ fun PlaybackBar(
                     shapes = IconButtonDefaults.shapes(
                         shape = IconButtonDefaults.smallRoundShape,
                         pressedShape = IconButtonDefaults.smallSquareShape
-                    )
+                    ),
+                    enabled = state.title != null
                 ) {
                     Icon(
                         imageVector = if (state.isPlaying) {
@@ -142,6 +146,19 @@ private fun Preview() {
                 isPlaying = true,
                 progress = 0.12F
             ),
+            onAction = {}
+        )
+    }
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@ExperimentalMaterial3ExpressiveApi
+@Composable
+private fun EmptyPreview() {
+    MusicTheme {
+        PlaybackBar(
+            state = PlaybackBarViewModel.EMPTY_PLAYBACK_BAR_STATE,
             onAction = {}
         )
     }
