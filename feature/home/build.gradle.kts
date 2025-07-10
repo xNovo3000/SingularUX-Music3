@@ -13,7 +13,7 @@ android {
     compileSdk = 36
     buildToolsVersion = "36.0.0"
     defaultConfig {
-        minSdk = 26
+        minSdk = 30
         consumerProguardFiles("consumer-rules.pro")
     }
     buildTypes {
@@ -43,11 +43,14 @@ dependencies {
     // Project
     api(project(":core:ui"))
     api(project(":data:library"))
+    api(project(":feature:playback"))
     // AndroidX
     implementation(libs.androidx.core)
+    implementation(libs.lifecycle.viewmodel)
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
     // Jetpack Compose
     implementation(platform(libs.jetpack.compose.bom))
     implementation(libs.jetpack.compose.animation)
@@ -59,4 +62,5 @@ dependencies {
     debugImplementation(libs.jetpack.compose.ui.tooling)
     // Jetpack Compose - Material 3
     implementation(libs.jetpack.compose.material3)
+    implementation(libs.jetpack.compose.material.icons)
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_bar_back">Back</string>
+    <string name="search_bar_empty">Empty</string>
+    <string name="search_bar_placeholder">Search library</string>
+    <string name="search_bar_search">Search</string>
+</resources>

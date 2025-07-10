@@ -43,8 +43,9 @@ data class PlaybackBarState(
 )
 
 sealed interface PlaybackBarAction {
-    data object PlayPause : PlaybackBarAction
-    data object GoToPlaybackScreen : PlaybackBarAction
+    data object Play : PlaybackBarAction
+    data object Pause : PlaybackBarAction
+    data object GoToPlaybackRoute : PlaybackBarAction
 }
 
 @ExperimentalMaterial3ExpressiveApi
@@ -59,7 +60,7 @@ fun PlaybackBar(
             .background(color = MaterialTheme.colorScheme.surfaceContainer)
             .clickable(
                 onClick = {
-                    onAction(PlaybackBarAction.GoToPlaybackScreen)
+                    onAction(PlaybackBarAction.GoToPlaybackRoute)
                 }
             )
     ) {
@@ -101,7 +102,11 @@ fun PlaybackBar(
                         )
                     ),
                     onClick = {
-                        onAction(PlaybackBarAction.PlayPause)
+                        if (state.isPlaying) {
+                            onAction(PlaybackBarAction.Pause)
+                        } else {
+                            onAction(PlaybackBarAction.Play)
+                        }
                     },
                     shapes = IconButtonDefaults.shapes(
                         shape = IconButtonDefaults.smallRoundShape,

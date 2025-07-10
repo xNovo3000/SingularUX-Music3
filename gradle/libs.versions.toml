@@ -11,6 +11,7 @@ androidx-activity = "1.10.1"
 coil = "3.2.0"
 lifecycle = "2.9.1"
 lifecycle-navigation3 = "1.0.0-alpha03"
+hilt-navigation-compose = "1.2.0"
 jetpack-compose = "2025.06.01"
 jetpack-compose-material3 = "1.4.0-alpha17"
 kotlinx-coroutines-guava = "1.10.2"
@@ -30,6 +31,7 @@ coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil"
 # Hilt
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
 # Jetpack Compose
 jetpack-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "jetpack-compose" }
 jetpack-compose-animation = { group = "androidx.compose.animation", name = "animation" }
@@ -48,7 +50,7 @@ kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 # Media 3
 media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "media3" }
 media3-session = { group = "androidx.media3", name = "media3-session", version.ref = "media3" }
-# Navigation 3
+# Navigation
 navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "navigation3" }
 navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "navigation3" }
 

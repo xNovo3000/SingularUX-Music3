@@ -13,7 +13,7 @@ android {
     compileSdk = 36
     buildToolsVersion = "36.0.0"
     defaultConfig {
-        minSdk = 26
+        minSdk = 30
         consumerProguardFiles("consumer-rules.pro")
     }
     buildTypes {
@@ -41,6 +41,7 @@ dependencies {
     api(project(":core:ui"))
     // AndroidX
     implementation(libs.androidx.core)
+    implementation(libs.lifecycle.viewmodel)
     // Coil
     implementation(libs.coil)
     // Hilt
