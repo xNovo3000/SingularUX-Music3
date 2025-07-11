@@ -49,6 +49,15 @@ fun TrackItem(
     ListItem(
         modifier = modifier
             .clickable(onClick = { onAction(TrackItemAction.Play) }),
+        colors = if (data.isCurrentlyPlaying) {
+            ListItemDefaults.colors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                headlineColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                supportingColor = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+        } else {
+            ListItemDefaults.colors()
+        },
         headlineContent = {
             Text(
                 text = data.title,
@@ -98,6 +107,25 @@ private fun TrackItemPreview() {
                 duration = 203.seconds,
                 artworkUri = null,
                 isCurrentlyPlaying = false
+            ),
+            onAction = {}
+        )
+    }
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun TrackItemPlayingPreview() {
+    MusicTheme {
+        TrackItem(
+            data = TrackItemData(
+                id = 1,
+                title = "In The End",
+                artistsName = "Linkin Park",
+                duration = 203.seconds,
+                artworkUri = null,
+                isCurrentlyPlaying = true
             ),
             onAction = {}
         )
