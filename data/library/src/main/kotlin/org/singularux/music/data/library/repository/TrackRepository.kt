@@ -4,4 +4,5 @@ import org.singularux.music.data.library.entity.TrackEntity
 
 interface TrackRepository {
     suspend fun getAll(): List<TrackEntity>
+    suspend fun getAllByTitleLike(title: String): List<TrackEntity>
 }
