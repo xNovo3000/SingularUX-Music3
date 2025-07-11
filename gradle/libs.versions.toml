@@ -14,6 +14,7 @@ coil = "3.2.0"
 hilt-navigation-compose = "1.2.0"
 compose-bom = "2025.06.01"
 compose-material3 = "1.4.0-alpha17"
+compose-accompanist = "0.37.3"
 kotlinx-coroutines-guava = "1.10.2"
 kotlinx-serialization-json = "1.9.0"
 media3 = "1.7.1"
@@ -39,6 +40,8 @@ compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 # Jetpack Compose - Material 3
 compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-material3" }
 compose-material-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
+# Jetpack Compose - Google Accompanist
+compose-accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "compose-accompanist" }
 # Hilt
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }

@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -73,12 +74,20 @@ fun PlaybackBar(
             headlineContent = {
                 val headlineText = state.title
                     ?: stringResource(R.string.playback_bar_unknown_track)
-                Text(text = headlineText)
+                Text(
+                    text = headlineText,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             },
             supportingContent = {
                 val supportText = state.artistsName
                     ?: stringResource(R.string.playback_bar_unknown_artist)
-                Text(text = supportText)
+                Text(
+                    text = supportText,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             },
             leadingContent = {
                 AsyncImage(

@@ -24,7 +24,7 @@ class MusicControllerFacade(
 
     val mediaControllerDeferred: Deferred<MediaController>
 
-    private var mediaController: MediaController? = null
+    var mediaController: MediaController? = null
     val isReady: Boolean
         get() = mediaController?.isConnected == true
 

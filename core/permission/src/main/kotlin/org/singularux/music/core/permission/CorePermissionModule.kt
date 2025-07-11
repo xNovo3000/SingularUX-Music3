@@ -17,12 +17,10 @@ class CorePermissionModule {
     @ActivityRetainedScoped
     fun providesMusicPermissionManager(
         @ApplicationContext context: Context
-    ): MusicPermissionManager {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            MusicPermissionManagerAndroid33(context = context)
-        } else {
-            MusicPermissionManagerAndroid26(context = context)
-        }
+    ): MusicPermissionManager = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        MusicPermissionManagerAndroid33(context = context)
+    } else {
+        MusicPermissionManagerAndroid26(context = context)
     }
 
 }

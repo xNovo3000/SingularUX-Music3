@@ -5,18 +5,14 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import org.singularux.music.core.permission.MusicPermission
 import org.singularux.music.core.permission.MusicPermissionManager
 import org.singularux.music.data.library.entity.TrackEntity
-import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
 import androidx.core.net.toUri
 
-@ActivityRetainedScoped
-class TrackRepositoryAndroid @Inject constructor(
-    @param:ApplicationContext private val context: Context,
+internal class TrackRepositoryAndroid(
+    private val context: Context,
     private val musicPermissionManager: MusicPermissionManager
 ) : TrackRepository {
 
@@ -33,7 +29,7 @@ class TrackRepositoryAndroid @Inject constructor(
             MediaStore.Audio.Media.DURATION
         )
         private const val GET_ALL_SELECTION = MediaStore.Audio.Media.IS_TRASHED + " = ?" +
-                MediaStore.Audio.Media.IS_MUSIC + " = ?"
+                " AND " + MediaStore.Audio.Media.IS_MUSIC + " = ?"
         private val GET_ALL_SELECTION_ARGS = arrayOf("0", "1")
         private const val GET_ALL_SORT_ORDER = MediaStore.Audio.Media.DEFAULT_SORT_ORDER
 
@@ -64,7 +60,7 @@ class TrackRepositoryAndroid @Inject constructor(
                         artistId = cursor.getLongOrNull(3),
                         artistName = cursor.getStringOrNull(4),
                         albumId = albumId,
-                        artwork = if (albumId != null) "${ARTWORK_URI_STRING}/${albumId}".toUri() else null,
+                        artworkUri = if (albumId != null) "${ARTWORK_URI_STRING}/${albumId}".toUri() else null,
                         duration = cursor.getLong(6).milliseconds
                     )
                 )

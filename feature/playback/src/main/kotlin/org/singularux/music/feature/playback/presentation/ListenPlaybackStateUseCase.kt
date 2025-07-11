@@ -3,11 +3,13 @@ package org.singularux.music.feature.playback.presentation
 import android.util.Log
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.channels.onSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.withContext
 import org.singularux.music.feature.playback.foreground.MusicControllerFacade
 import org.singularux.music.feature.playback.model.PlaybackInfo
 import org.singularux.music.feature.playback.model.PlaybackState
@@ -50,7 +52,9 @@ class ListenPlaybackStateUseCase @Inject constructor(
             }
 
         }
-        mediaController.addListener(listener)
+        withContext(Dispatchers.Main) {
+            mediaController.addListener(listener)
+        }
         listener.updatePlaybackState()
         awaitClose { musicControllerFacade.removeListener(listener) }
     }

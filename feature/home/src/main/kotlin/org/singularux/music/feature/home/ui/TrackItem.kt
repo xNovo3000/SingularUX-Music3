@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -25,6 +26,7 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 data class TrackItemData(
+    val id: Long,
     val title: String,
     val artistsName: String?,
     val duration: Duration,
@@ -46,14 +48,24 @@ fun TrackItem(
     ListItem(
         modifier = modifier
             .clickable(onClick = { onAction(TrackItemAction.Play) }),
-        headlineContent = { Text(text = data.title) },
+        headlineContent = {
+            Text(
+                text = data.title,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
         supportingContent = {
             val artistsName = data.artistsName ?: stringResource(R.string.track_item_unknown_artist)
             val durationMinutes = data.duration.inWholeMinutes
             val durationSeconds = data.duration.inWholeSeconds % 60
             val text = stringResource(R.string.track_item_supporting,
                 durationMinutes, durationSeconds, artistsName)
-            Text(text = text)
+            Text(
+                text = text,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
         },
         leadingContent = {
             AsyncImage(
@@ -79,6 +91,7 @@ private fun TrackItemPreview() {
     MusicTheme {
         TrackItem(
             data = TrackItemData(
+                id = 1,
                 title = "In The End",
                 artistsName = "Linkin Park",
                 duration = 203.seconds,
@@ -97,6 +110,7 @@ private fun TrackItemNoArtistPreview() {
     MusicTheme {
         TrackItem(
             data = TrackItemData(
+                id = 1,
                 title = "In The End",
                 artistsName = null,
                 duration = 203.seconds,

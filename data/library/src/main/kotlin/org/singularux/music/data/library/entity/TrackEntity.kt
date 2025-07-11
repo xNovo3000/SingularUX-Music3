@@ -9,6 +9,6 @@ data class TrackEntity(
     val artistId: Long?,
     val artistName: String?,
     val albumId: Long?,
-    val artwork: Uri?,
+    val artworkUri: Uri?,
     val duration: Duration
 )

@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import org.singularux.music.feature.playback.foreground.MusicControllerFacade
 import org.singularux.music.feature.playback.presentation.ListenPlaybackInfoUseCase
 import org.singularux.music.feature.playback.presentation.ListenPlaybackProgressUseCase
 import org.singularux.music.feature.playback.presentation.ListenPlaybackStateUseCase
@@ -16,7 +17,8 @@ import javax.inject.Inject
 class PlaybackBarViewModel @Inject constructor(
     listenPlaybackInfoUseCase: ListenPlaybackInfoUseCase,
     listenPlaybackProgressUseCase: ListenPlaybackProgressUseCase,
-    listenPlaybackStateUseCase: ListenPlaybackStateUseCase
+    listenPlaybackStateUseCase: ListenPlaybackStateUseCase,
+    private val musicControllerFacade: MusicControllerFacade
 ) : ViewModel() {
 
     companion object {
@@ -42,5 +44,13 @@ class PlaybackBarViewModel @Inject constructor(
             progress = playbackProgress.progress
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), EMPTY_PLAYBACK_BAR_STATE)
+
+    fun play() {
+        musicControllerFacade.mediaController?.play()
+    }
+
+    fun pause() {
+        musicControllerFacade.mediaController?.pause()
+    }
 
 }

@@ -13,6 +13,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 import org.singularux.music.feature.home.viewmodel.HomeViewModel
 import org.singularux.music.feature.playback.ui.PlaybackBar
 import org.singularux.music.feature.playback.ui.PlaybackBarAction
@@ -20,6 +23,7 @@ import org.singularux.music.feature.playback.viewmodel.PlaybackBarViewModel
 
 @ExperimentalMaterial3ExpressiveApi
 @ExperimentalMaterial3Api
+@ExperimentalPermissionsApi
 @Composable
 fun HomeRoute(
     homeViewModel: HomeViewModel,
@@ -58,13 +62,23 @@ fun HomeRoute(
                 onAction = { action ->
                     when (action) {
                         PlaybackBarAction.GoToPlaybackRoute -> onGoToPlaybackRoute()
-                        PlaybackBarAction.Pause -> homeViewModel.pause()
-                        PlaybackBarAction.Play -> homeViewModel.play()
+                        PlaybackBarAction.Pause -> playbackBarViewModel.pause()
+                        PlaybackBarAction.Play -> playbackBarViewModel.play()
                     }
                 }
             )
         }
     ) { contentPadding ->
-        contentPadding
+        val readMusicPermissionState = rememberPermissionState(homeViewModel.readMusicPermission)
+        if (readMusicPermissionState.status.isGranted) {
+            val trackItemDataList by homeViewModel.trackItemDataList.collectAsStateWithLifecycle()
+            HomeContent(
+                contentPadding = contentPadding,
+                trackItemDataList = trackItemDataList,
+                onTrackItemAction = { data, action ->
+                    // TODO
+                }
+            )
+        }
     }
 }
