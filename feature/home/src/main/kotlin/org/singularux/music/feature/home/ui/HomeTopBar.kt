@@ -102,8 +102,8 @@ fun HomeExpandedTopBar(
     modifier: Modifier = Modifier,
     searchBarState: SearchBarState,
     inputField: @Composable () -> Unit,
-    trackItemDataList: List<TrackItemData>,
-    onTrackItemAction: (TrackItemData, TrackItemAction) -> Unit
+    searchTrackItemDataList: List<SearchTrackItemData>,
+    onSearchTrackItemAction: (SearchTrackItemData, SearchTrackItemAction) -> Unit
 ) {
     ExpandedFullScreenSearchBar(
         modifier = modifier,
@@ -112,12 +112,12 @@ fun HomeExpandedTopBar(
     ) {
         LazyColumn {
             items(
-                items = trackItemDataList,
+                items = searchTrackItemDataList,
                 key = { it.id }
-            ) { trackItemData ->
-                TrackItem(
-                    data = trackItemData,
-                    onAction = { onTrackItemAction(trackItemData, it) }
+            ) { searchTrackItemData ->
+                SearchTrackItem(
+                    data = searchTrackItemData,
+                    onAction = { onSearchTrackItemAction(searchTrackItemData, it) }
                 )
             }
         }
@@ -145,8 +145,8 @@ private fun HomeTopBarPreview() {
             HomeExpandedTopBar(
                 searchBarState = searchBarState,
                 inputField = inputField,
-                trackItemDataList = listOf(),
-                onTrackItemAction = { data, action ->  }
+                searchTrackItemDataList = listOf(),
+                onSearchTrackItemAction = { data, action ->  }
             )
         }
     }

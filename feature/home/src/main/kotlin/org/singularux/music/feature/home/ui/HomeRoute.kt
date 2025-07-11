@@ -46,12 +46,12 @@ fun HomeRoute(
                 inputField = inputField,
                 scrollBehavior = scrollBehavior
             )
-            val trackItemDataList by homeViewModel.trackItemDataSearchList.collectAsStateWithLifecycle()
+            val searchTrackItemDataList by homeViewModel.trackItemDataSearchList.collectAsStateWithLifecycle()
             HomeExpandedTopBar(
                 searchBarState = searchBarState,
                 inputField = inputField,
-                trackItemDataList = trackItemDataList,
-                onTrackItemAction = { data, action ->
+                searchTrackItemDataList = searchTrackItemDataList,
+                onSearchTrackItemAction = { data, action ->
                     // TODO
                 }
             )
