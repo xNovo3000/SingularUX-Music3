@@ -3,6 +3,7 @@ package org.singularux.music.feature.home.ui
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
@@ -100,14 +101,26 @@ private fun HomeTopBarInputFieldPreview() {
 fun HomeExpandedTopBar(
     modifier: Modifier = Modifier,
     searchBarState: SearchBarState,
-    inputField: @Composable () -> Unit
+    inputField: @Composable () -> Unit,
+    trackItemDataList: List<TrackItemData>,
+    onTrackItemAction: (TrackItemData, TrackItemAction) -> Unit
 ) {
     ExpandedFullScreenSearchBar(
         modifier = modifier,
         state = searchBarState,
         inputField = inputField
     ) {
-        LazyColumn {}
+        LazyColumn {
+            items(
+                items = trackItemDataList,
+                key = { it.id }
+            ) { trackItemData ->
+                TrackItem(
+                    data = trackItemData,
+                    onAction = { onTrackItemAction(trackItemData, it) }
+                )
+            }
+        }
     }
 }
 
@@ -131,7 +144,9 @@ private fun HomeTopBarPreview() {
             )
             HomeExpandedTopBar(
                 searchBarState = searchBarState,
-                inputField = inputField
+                inputField = inputField,
+                trackItemDataList = listOf(),
+                onTrackItemAction = { data, action ->  }
             )
         }
     }

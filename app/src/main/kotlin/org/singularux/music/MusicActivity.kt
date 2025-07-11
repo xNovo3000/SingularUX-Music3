@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.FlowPreview
 import org.singularux.music.feature.playback.foreground.MusicControllerFacade
 import javax.inject.Inject
 
@@ -14,6 +15,7 @@ class MusicActivity : ComponentActivity() {
 
     @Inject lateinit var musicControllerFacade: MusicControllerFacade
 
+    @FlowPreview
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
             .setKeepOnScreenCondition { !musicControllerFacade.isReady }

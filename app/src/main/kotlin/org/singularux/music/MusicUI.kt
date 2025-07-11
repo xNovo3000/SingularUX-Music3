@@ -5,6 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.FlowPreview
 import kotlinx.serialization.Serializable
 import org.singularux.music.core.ui.MusicSurface
 import org.singularux.music.core.ui.MusicTheme
@@ -16,6 +17,7 @@ sealed class MusicRoute {
     @Serializable data object NowPlaying : MusicRoute()
 }
 
+@FlowPreview
 @Composable
 fun MusicUI() {
     MusicTheme {
@@ -29,7 +31,7 @@ fun MusicUI() {
                     HomeRoute(
                         homeViewModel = hiltViewModel(),
                         playbackBarViewModel = hiltViewModel(),
-                        onGoToPlaybackRoute = { navController.navigate(MusicRoute.NowPlaying) }
+                        onGoToPlaybackRoute = {}
                     )
                 }
             }

@@ -35,7 +35,7 @@ internal class TrackRepositoryAndroid(
         private val GET_ALL_SELECTION_ARGS = listOf("0", "1")
         private const val GET_ALL_SORT_ORDER = MediaStore.Audio.Media.DEFAULT_SORT_ORDER
 
-        private const val GET_ALL_BY_TITLE_LIKE_SELECTION = "${MediaStore.Audio.Media.IS_MUSIC} = ? " +
+        private const val GET_ALL_BY_TITLE_LIKE_SELECTION = "${MediaStore.Audio.Media.IS_TRASHED} = ? " +
                 "AND ${MediaStore.Audio.Media.IS_MUSIC} = ? AND " +
                 "(${MediaStore.Audio.Media.TITLE} LIKE ? OR ${MediaStore.Audio.Media.DISPLAY_NAME} LIKE ?)"
 
@@ -85,6 +85,10 @@ internal class TrackRepositoryAndroid(
         // Check for READ_MUSIC permission
         // If not present, return empty list
         // If present, query MediaStore
+        // If title is empty, return empty list
+        if (title.isEmpty()) {
+            return emptyList()
+        }
         if (!musicPermissionManager.hasPermission(MusicPermission.READ_MUSIC)) {
             Log.d(TAG, "getAll(): missing permission READ_MUSIC")
             return emptyList()
