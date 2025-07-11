@@ -1,45 +1,38 @@
 package org.singularux.music
 
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
-import androidx.navigation3.runtime.NavKey
-import androidx.navigation3.runtime.entry
-import androidx.navigation3.runtime.entryProvider
-import androidx.navigation3.runtime.rememberNavBackStack
-import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
-import androidx.navigation3.ui.NavDisplay
-import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import kotlinx.serialization.Serializable
 import org.singularux.music.core.ui.MusicSurface
 import org.singularux.music.core.ui.MusicTheme
 import org.singularux.music.feature.home.ui.HomeRoute
 
 @Serializable
-data object Home : NavKey
-
-@Serializable
-data object NowPlaying : NavKey
+sealed class MusicRoute {
+    @Serializable data object Home : MusicRoute()
+    @Serializable data object NowPlaying : MusicRoute()
+}
 
 @Composable
 fun MusicUI() {
     MusicTheme {
         MusicSurface {
-            val backStack = rememberNavBackStack(Home)
-            NavDisplay(
-                backStack = backStack,
-                entryDecorators = listOf(
-                    rememberSavedStateNavEntryDecorator(),
-                    rememberSceneSetupNavEntryDecorator(),
-                    rememberViewModelStoreNavEntryDecorator(),
-                ),
-                entryProvider = entryProvider {
-                    entry<Home> {
-                        HomeRoute(
-                            onGoToPlaybackRoute = { backStack.add(NowPlaying) }
-                        )
-                    }
+            val navController = rememberNavController()
+            NavHost(
+                navController = navController,
+                startDestination = MusicRoute.Home
+            ) {
+                composable<MusicRoute.Home> {
+                    HomeRoute(
+                        homeViewModel = hiltViewModel(),
+                        playbackBarViewModel = hiltViewModel(),
+                        onGoToPlaybackRoute = { navController.navigate(MusicRoute.NowPlaying) }
+                    )
                 }
-            )
+            }
         }
     }
 }

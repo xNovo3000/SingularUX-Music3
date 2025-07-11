@@ -41,24 +41,24 @@ dependencies {
     api(project(":core:ui"))
     // AndroidX
     implementation(libs.androidx.core)
-    implementation(libs.lifecycle.viewmodel)
+    implementation(libs.androidx.viewmodel.compose)
     // Coil
-    implementation(libs.coil)
+    implementation(libs.coil.compose)
     // Hilt
     implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    ksp(libs.hilt.android.compiler)
     // Jetpack Compose
-    implementation(platform(libs.jetpack.compose.bom))
-    implementation(libs.jetpack.compose.animation)
-    implementation(libs.jetpack.compose.foundation)
-    implementation(libs.jetpack.compose.runtime)
-    implementation(libs.jetpack.compose.ui)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.animation)
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.runtime)
+    implementation(libs.compose.ui)
     // Jetpack Compose - Preview
-    implementation(libs.jetpack.compose.ui.preview)
-    debugImplementation(libs.jetpack.compose.ui.tooling)
+    implementation(libs.compose.ui.preview)
+    debugImplementation(libs.compose.ui.tooling)
     // Jetpack Compose - Material 3
-    implementation(libs.jetpack.compose.material3)
-    implementation(libs.jetpack.compose.material.icons)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.material.icons)
     // KotlinX
     implementation(libs.kotlinx.coroutines.guava)
     // Media 3

@@ -42,10 +42,10 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.core.splashscreen)
     // Jetpack Compose
-    implementation(platform(libs.jetpack.compose.bom))
-    implementation(libs.jetpack.compose.animation)
-    implementation(libs.jetpack.compose.foundation)
-    implementation(libs.jetpack.compose.runtime)
-    implementation(libs.jetpack.compose.ui)
-    implementation(libs.jetpack.compose.material3)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.animation)
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.runtime)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.material3)
 }

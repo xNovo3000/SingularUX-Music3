@@ -12,7 +12,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.singularux.music.feature.home.viewmodel.HomeViewModel
 import org.singularux.music.feature.playback.ui.PlaybackBar
@@ -23,8 +22,8 @@ import org.singularux.music.feature.playback.viewmodel.PlaybackBarViewModel
 @ExperimentalMaterial3Api
 @Composable
 fun HomeRoute(
-    homeViewModel: HomeViewModel = hiltViewModel(),
-    playbackBarViewModel: PlaybackBarViewModel = hiltViewModel(),
+    homeViewModel: HomeViewModel,
+    playbackBarViewModel: PlaybackBarViewModel,
     onGoToPlaybackRoute: () -> Unit,
 ) {
     val scrollBehavior = SearchBarDefaults.enterAlwaysSearchBarScrollBehavior()

@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt)
 }
 
@@ -51,21 +51,19 @@ dependencies {
     // AndroidX
     implementation(libs.androidx.core)
     implementation(libs.androidx.core.splashscreen)
-    implementation(libs.androidx.activity)
-    implementation(libs.lifecycle.viewmodel)
-    implementation(libs.lifecycle.viewmodel.navigation3)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.viewmodel.compose)
     // Hilt
     implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.hilt.navigation.compose)
     // Jetpack Compose
-    implementation(platform(libs.jetpack.compose.bom))
-    implementation(libs.jetpack.compose.animation)
-    implementation(libs.jetpack.compose.foundation)
-    implementation(libs.jetpack.compose.runtime)
-    implementation(libs.jetpack.compose.ui)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.animation)
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.runtime)
+    implementation(libs.compose.ui)
     // KotlinX
     implementation(libs.kotlinx.serialization.json)
-    // Navigation 3
-    implementation(libs.navigation3.runtime)
-    implementation(libs.navigation3.ui)
 }
