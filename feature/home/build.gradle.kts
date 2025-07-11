@@ -47,6 +47,8 @@ dependencies {
     // AndroidX
     implementation(libs.androidx.core)
     implementation(libs.androidx.viewmodel.compose)
+    // Coil
+    implementation(libs.coil.compose)
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)

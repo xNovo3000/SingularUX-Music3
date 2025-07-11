@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="track_item_artwork_size">56dp</dimen>
+    <string name="track_item_artwork_description">Album artwork</string>
+    <string name="track_item_supporting" formatted="false">%d:%02d &#183; %s</string>
+    <string name="track_item_unknown_artist">Unknown artist</string>
+</resources>
