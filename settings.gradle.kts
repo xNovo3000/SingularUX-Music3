@@ -21,6 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "Music"
 include(":app")
+include(":baseline")
 include(":core:ui")
 include(":core:permission")
 include(":data:library")

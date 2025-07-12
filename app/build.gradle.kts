@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.androidx.baseline)
 }
 
 android {
@@ -21,7 +22,7 @@ android {
         versionName = "20250705"
     }
     buildTypes {
-        release {
+        val release by getting {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -68,4 +69,7 @@ dependencies {
     implementation(libs.compose.ui)
     // KotlinX
     implementation(libs.kotlinx.serialization.json)
+    // Baseline
+    implementation(libs.androidx.profileinstaller)
+    baselineProfile(project(":baseline"))
 }
