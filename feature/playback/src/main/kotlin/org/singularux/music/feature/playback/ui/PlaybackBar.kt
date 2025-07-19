@@ -22,6 +22,7 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -107,11 +108,13 @@ fun PlaybackBar(
             },
             trailingContent = {
                 FilledIconButton(
-                    modifier = Modifier.size(
-                        size = IconButtonDefaults.smallContainerSize(
-                            widthOption = IconButtonDefaults.IconButtonWidthOption.Wide
-                        )
-                    ),
+                    modifier = Modifier
+                        .minimumInteractiveComponentSize()
+                        .size(
+                            size = IconButtonDefaults.smallContainerSize(
+                                widthOption = IconButtonDefaults.IconButtonWidthOption.Wide
+                            )
+                        ),
                     onClick = {
                         if (state.isPlaying) {
                             onAction(PlaybackBarAction.Pause)

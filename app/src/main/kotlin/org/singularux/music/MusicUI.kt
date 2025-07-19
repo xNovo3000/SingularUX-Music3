@@ -10,6 +10,7 @@ import kotlinx.serialization.Serializable
 import org.singularux.music.core.ui.MusicSurface
 import org.singularux.music.core.ui.MusicTheme
 import org.singularux.music.feature.home.ui.HomeRoute
+import org.singularux.music.feature.playback.ui.NowPlayingRoute
 
 @Serializable
 sealed class MusicRoute {
@@ -31,7 +32,13 @@ fun MusicUI() {
                     HomeRoute(
                         homeViewModel = hiltViewModel(),
                         playbackBarViewModel = hiltViewModel(),
-                        onGoToPlaybackRoute = {}
+                        onGoToPlaybackRoute = { navController.navigate(MusicRoute.NowPlaying) }
+                    )
+                }
+                composable<MusicRoute.NowPlaying> {
+                    NowPlayingRoute(
+                        nowPlayingViewModel = hiltViewModel(),
+                        onBackPress = { navController.navigateUp() }
                     )
                 }
             }

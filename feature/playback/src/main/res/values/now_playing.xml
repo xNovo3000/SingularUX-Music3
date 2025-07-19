@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="now_playing_app_bar_back">Back</string>
+    <string name="now_playing_app_bar_title">Now playing</string>
+    <dimen name="now_playing_artwork_size">280dp</dimen>
+    <string name="now_playing_unknown_track">Unknown track</string>
+    <string name="now_playing_unknown_artist">Unknown artist</string>
+    <string name="now_playing_duration" formatted="false">%d:%02d</string>
+</resources>
