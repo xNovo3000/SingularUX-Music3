@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
@@ -103,7 +104,7 @@ fun HomeExpandedTopBar(
     searchBarState: SearchBarState,
     inputField: @Composable () -> Unit,
     searchTrackItemDataList: List<SearchTrackItemData>,
-    onSearchTrackItemAction: (SearchTrackItemData, SearchTrackItemAction) -> Unit
+    onSearchTrackItemAction: (index: Int, data: SearchTrackItemData, action: SearchTrackItemAction) -> Unit
 ) {
     ExpandedFullScreenSearchBar(
         modifier = modifier,
@@ -111,13 +112,13 @@ fun HomeExpandedTopBar(
         inputField = inputField
     ) {
         LazyColumn {
-            items(
+            itemsIndexed(
                 items = searchTrackItemDataList,
-                key = { it.id }
-            ) { searchTrackItemData ->
+                key = { index, item -> item.id }
+            ) { index, searchTrackItemData ->
                 SearchTrackItem(
                     data = searchTrackItemData,
-                    onAction = { onSearchTrackItemAction(searchTrackItemData, it) }
+                    onAction = { onSearchTrackItemAction(index, searchTrackItemData, it) }
                 )
             }
         }
@@ -146,7 +147,7 @@ private fun HomeTopBarPreview() {
                 searchBarState = searchBarState,
                 inputField = inputField,
                 searchTrackItemDataList = listOf(),
-                onSearchTrackItemAction = { data, action ->  }
+                onSearchTrackItemAction = { index, data, action ->  }
             )
         }
     }

@@ -2,6 +2,7 @@ package org.singularux.music.feature.playback.presentation
 
 import android.util.Log
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
@@ -34,18 +35,16 @@ class ListenPlaybackInfoUseCase @Inject constructor(
         // Force first start and on finished unregister the listener
         val listener = object : Player.Listener {
 
-            override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) = updatePlaybackInfo()
+            override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) = updatePlaybackInfo()
 
             fun updatePlaybackInfo() {
                 // Always called on main thread, safe to use
                 val playbackInfo = if (mediaController.currentMediaItem != null) {
-                    val title = mediaController.mediaMetadata.title?.toString() ?: ""
-                    val artistsName = mediaController.mediaMetadata.artist?.toString()
-                    val artworkUri = mediaController.mediaMetadata.artworkUri
                     PlaybackInfo(
-                        title = title,
-                        artistsName = artistsName,
-                        artworkUri = artworkUri
+                        mediaId = mediaController.currentMediaItem?.mediaId,
+                        title = mediaController.mediaMetadata.title?.toString(),
+                        artistsName = mediaController.mediaMetadata.artist?.toString(),
+                        artworkUri = mediaController.mediaMetadata.artworkUri
                     )
                 } else {
                     null

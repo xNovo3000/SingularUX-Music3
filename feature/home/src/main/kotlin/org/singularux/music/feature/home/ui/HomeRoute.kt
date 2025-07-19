@@ -51,8 +51,11 @@ fun HomeRoute(
                 searchBarState = searchBarState,
                 inputField = inputField,
                 searchTrackItemDataList = searchTrackItemDataList,
-                onSearchTrackItemAction = { data, action ->
-                    // TODO
+                onSearchTrackItemAction = { index, _, action ->
+                    when (action) {
+                        SearchTrackItemAction.AddToQueue -> {}
+                        SearchTrackItemAction.Play -> homeViewModel.playFromSearchTrackList(index)
+                    }
                 }
             )
         },
@@ -76,8 +79,11 @@ fun HomeRoute(
             HomeContent(
                 contentPadding = contentPadding,
                 trackItemDataList = trackItemDataList,
-                onTrackItemAction = { data, action ->
-                    // TODO
+                onTrackItemAction = { index, _, action ->
+                    when (action) {
+                        TrackItemAction.AddToQueue -> {}
+                        TrackItemAction.Play -> homeViewModel.playFromTrackList(index)
+                    }
                 }
             )
         }

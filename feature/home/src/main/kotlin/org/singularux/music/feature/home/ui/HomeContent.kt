@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -19,7 +20,7 @@ fun HomeContent(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues,
     trackItemDataList: List<TrackItemData>,
-    onTrackItemAction: (TrackItemData, TrackItemAction) -> Unit
+    onTrackItemAction: (index: Int, data: TrackItemData, action: TrackItemAction) -> Unit
 ) {
     val currentLayoutDirection = LocalLayoutDirection.current
     LazyColumn(
@@ -31,13 +32,13 @@ fun HomeContent(
             bottom = contentPadding.calculateBottomPadding() + 8.dp
         )
     ) {
-        items(
+        itemsIndexed(
             items = trackItemDataList,
-            key = { it.id }
-        ) { trackItemData ->
+            key = { index, item -> item.id }
+        ) { index, trackItemData ->
             TrackItem(
                 data = trackItemData,
-                onAction = { onTrackItemAction(trackItemData, it) }
+                onAction = { onTrackItemAction(index, trackItemData, it) }
             )
         }
     }
@@ -60,7 +61,7 @@ private fun HomeContentPreview() {
                     isCurrentlyPlaying = false
                 )
             },
-            onTrackItemAction = { data, action ->  }
+            onTrackItemAction = { index, data, action ->  }
         )
     }
 }

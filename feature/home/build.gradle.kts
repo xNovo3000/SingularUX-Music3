@@ -66,4 +66,7 @@ dependencies {
     implementation(libs.compose.material.icons)
     // Jetpack Compose - Accompanist
     implementation(libs.compose.accompanist.permissions)
+    // Media 3
+    implementation(libs.media3.exoplayer)
+    implementation(libs.media3.session)
 }

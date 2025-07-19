@@ -4,7 +4,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.singularux.music.data.library.repository.TrackRepository
 import org.singularux.music.feature.home.ui.SearchTrackItemData
-import org.singularux.music.feature.home.ui.TrackItemData
 import javax.inject.Inject
 
 class GetTrackListByNameUseCase @Inject constructor(
