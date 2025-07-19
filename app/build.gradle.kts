@@ -22,7 +22,7 @@ android {
         versionName = "20250705"
     }
     buildTypes {
-        val release by getting {
+        release {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
