@@ -20,6 +20,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSliderState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
@@ -96,26 +102,32 @@ private fun NowPlayingTitleArtistsPreview() {
     }
 }
 
-data class NowPlayingCurrentEndTimeData(
+data class NowPlayingTimeData(
     val progress: Float,
     val total: Duration
 )
 
 @ExperimentalMaterial3Api
 @Composable
-fun NowPlayingCurrentEndTime(
+fun NowPlayingTime(
     modifier: Modifier = Modifier,
-    data: NowPlayingCurrentEndTimeData
+    data: NowPlayingTimeData,
+    onValueChange: (value: Float) -> Unit
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
     ) {
-        Slider(
-            value = data.progress,
-            onValueChange = {},
-            onValueChangeFinished = {}
+        var uiProgress by remember { mutableFloatStateOf(0.0F) }
+        val sliderState = rememberSliderState(
+            onValueChangeFinished = { onValueChange(uiProgress) }
         )
+        LaunchedEffect(uiProgress) {
+            if (!sliderState.isDragging) {
+                sliderState.value = uiProgress
+            }
+        }
+        Slider(state = sliderState)
         Spacer(modifier = Modifier.height(4.dp))
         Row(
             modifier = Modifier
@@ -151,12 +163,13 @@ fun NowPlayingCurrentEndTime(
 private fun NowPlayingCurrentEndTimePreview() {
     MusicTheme {
         Surface(color = MaterialTheme.colorScheme.surfaceContainer) {
-            NowPlayingCurrentEndTime(
+            NowPlayingTime(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                data = NowPlayingCurrentEndTimeData(
-                    progress = 0.0F,
+                data = NowPlayingTimeData(
+                    progress = 0.35F,
                     total = 201.seconds
-                )
+                ),
+                onValueChange = {}
             )
         }
     }

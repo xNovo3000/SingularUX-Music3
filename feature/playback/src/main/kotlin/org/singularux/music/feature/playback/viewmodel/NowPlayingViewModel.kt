@@ -35,4 +35,8 @@ class NowPlayingViewModel @Inject constructor(
     val playbackState = listenPlaybackStateUseCase()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), EMPTY_PLAYBACK_STATE)
 
+    fun seekTo(positionMs: Long) {
+
+    }
+
 }
