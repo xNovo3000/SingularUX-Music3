@@ -26,4 +26,5 @@ rootProject.name = "Music3"
 
 include(":app")
 include(":core:permission")
+include(":core:playback")
 include(":core:ui")

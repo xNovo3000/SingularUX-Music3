@@ -3,7 +3,7 @@ package org.singularux.music.core.permission
 import android.Manifest
 import android.content.Context
 
-class MusicPermissionManagerAndroid31(
+internal class MusicPermissionManagerAndroid31(
     context: Context
 ) : MusicPermissionManagerAndroid(context = context) {
 

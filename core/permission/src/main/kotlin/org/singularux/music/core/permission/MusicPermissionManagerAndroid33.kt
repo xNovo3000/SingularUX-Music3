@@ -6,7 +6,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-class MusicPermissionManagerAndroid33(
+internal class MusicPermissionManagerAndroid33(
     context: Context
 ) : MusicPermissionManagerAndroid(context = context) {
 
