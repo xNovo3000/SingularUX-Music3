@@ -11,7 +11,9 @@ androidx-activity = "1.10.1"
 compose-bom = "2025.08.00"
 compose-material3 = "1.5.0-alpha02"
 hilt-navigation = "1.2.0"
+lifecycle = "2.10.0-alpha02"
 media3 = "1.8.0"
+navigation3 = "1.0.0-alpha07"
 
 [libraries]
 # AndroidX
@@ -34,9 +36,15 @@ compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 # Jetpack Compose - Material 3
 compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-material3" }
 compose-material-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
+# Lifecycle
+lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+lifecycle-viewmodel-navigation3 = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-navigation3", version.ref = "lifecycle" }
 # Media3
 media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "media3" }
 media3-session = { group = "androidx.media3", name = "media3-session", version.ref = "media3" }
+# Navigation3
+navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "navigation3" }
+navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "navigation3" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
