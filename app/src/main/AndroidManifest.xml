@@ -11,6 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.Music"
-        tools:apiVersion="36"/>
+        tools:targetApi="36"/>
 
 </manifest>

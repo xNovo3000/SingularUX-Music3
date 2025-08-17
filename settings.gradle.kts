@@ -1,8 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-include(":core:ui")
-
-
 pluginManagement {
     repositories {
         google {
@@ -16,6 +13,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -25,4 +23,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Music3"
+
 include(":app")
+include(":core:permission")
+include(":core:ui")

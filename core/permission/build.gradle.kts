@@ -1,27 +1,23 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 }
 
 android {
-    namespace = "org.singularux.music"
+    namespace = "org.singularux.music.core.permission"
     compileSdk = 36
     buildToolsVersion = "36.0.0"
     defaultConfig {
-        applicationId = "org.singularux.music"
         minSdk = 31
-        targetSdk = 36
-        versionCode = 1
-        versionName = "0.1.0"
+        consumerProguardFiles("consumer-rules.pro")
     }
     buildTypes {
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -40,9 +36,6 @@ android {
 }
 
 dependencies {
-    // Project
-    api(project(":core:permission"))
-    api(project(":core:ui"))
     // AndroidX
     implementation(libs.androidx.core)
     // Hilt
