@@ -45,6 +45,8 @@ dependencies {
     // AndroidX
     implementation(libs.androidx.core)
     implementation(libs.androidx.core.splashscreen)
+    // Coil3
+    implementation(libs.coil3)
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
