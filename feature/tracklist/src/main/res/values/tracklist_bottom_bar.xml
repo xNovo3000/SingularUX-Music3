@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tracklist_bottom_bar_pause">Pause</string>
+    <string name="tracklist_bottom_bar_play">Play</string>
+    <string name="tracklist_bottom_bar_unknown_artist">Unknown artist</string>
+    <string name="tracklist_bottom_bar_unknown_track">Unknown track</string>
+</resources>

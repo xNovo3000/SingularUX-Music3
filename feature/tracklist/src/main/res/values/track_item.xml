@@ -2,5 +2,6 @@
 <resources>
     <string name="track_item_supporting_content" formatted="false">%d:%02d &#183; %s</string>
     <string name="track_item_unknown_artist">Unknown artist</string>
+    <string name="track_item_unknown_track">Unknown track</string>
     <string name="track_item_add_to_queue">Add to queue</string>
 </resources>
