@@ -1,21 +1,49 @@
 package org.singularux.music.feature.tracklist.ui
 
-import android.annotation.SuppressLint
-import android.content.res.Configuration
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.rememberSearchBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.tooling.preview.Preview
-import org.singularux.music.core.ui.MusicTheme
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberPermissionState
 import org.singularux.music.feature.tracklist.viewmodel.TrackListViewModel
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
 fun TrackListRoute(viewModel: TrackListViewModel) {
     val contentState = rememberLazyListState()
+    val searchBarScrollBehavior = SearchBarDefaults.enterAlwaysSearchBarScrollBehavior()
     Scaffold(
+        modifier = Modifier
+            .nestedScroll(searchBarScrollBehavior.nestedScrollConnection),
+        topBar = {
+            val searchBarState = rememberSearchBarState()
+            val inputField = @Composable {
+                TrackListSearchBarInputField(
+                    textFieldState = viewModel.searchBarTextFieldState,
+                    searchBarState = searchBarState
+                )
+            }
+            TrackListSearchBarCollapsed(
+                state = searchBarState,
+                inputField = inputField,
+                scrollBehavior = searchBarScrollBehavior
+            )
+            TrackListSearchBarExpanded(
+                state = searchBarState,
+                inputField = inputField,
+                items = emptyList(),
+                onItemAction = { index, action -> }
+            )
+        },
         floatingActionButton = {
             val expanded by remember {
                 derivedStateOf { contentState.firstVisibleItemIndex == 0 }
@@ -32,16 +60,11 @@ fun TrackListRoute(viewModel: TrackListViewModel) {
             )
         }
     ) { innerPadding ->
-        innerPadding
-    }
-}
-
-@SuppressLint("ViewModelConstructorInComposable")
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun Preview() {
-    MusicTheme {
-        TrackListRoute(viewModel = TrackListViewModel())
+        val readMusicPermissionLauncher = rememberPermissionState(
+            permission = viewModel.readMusicPermission
+        )
+        LaunchedEffect(Unit) {
+            readMusicPermissionLauncher.launchPermissionRequest()
+        }
     }
 }

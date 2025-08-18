@@ -41,6 +41,7 @@ android {
 
 dependencies {
     // Project
+    api(project(":core:permission"))
     api(project(":core:ui"))
     // AndroidX
     implementation(libs.androidx.core)
@@ -62,6 +63,8 @@ dependencies {
     // Jetpack Compose - Material 3
     implementation(libs.compose.material3)
     implementation(libs.compose.material.icons)
+    // Jetpack Compose - Accompanist
+    implementation(libs.compose.accompanist.permissions)
     // Lifecycle
     implementation(libs.lifecycle.viewmodel)
 }

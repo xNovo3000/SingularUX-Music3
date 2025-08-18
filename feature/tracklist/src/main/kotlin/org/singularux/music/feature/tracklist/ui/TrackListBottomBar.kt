@@ -52,7 +52,7 @@ enum class TrackListBottomBarAction {
 fun TrackListBottomBar(
     modifier: Modifier = Modifier,
     data: TrackListBottomBarData,
-    onAction: (TrackListBottomBarAction) -> Unit
+    onAction: (action: TrackListBottomBarAction) -> Unit
 ) {
     Column(
         modifier = modifier.fillMaxWidth()

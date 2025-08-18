@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.PlaylistAdd
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemColors
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SwipeToDismissBox
@@ -48,8 +49,9 @@ enum class TrackItemAction {
 @Composable
 fun TrackItem(
     modifier: Modifier = Modifier,
+    colors: ListItemColors = ListItemDefaults.colors(),
     data: TrackItemData,
-    onAction: (TrackItemAction) -> Unit
+    onAction: (action: TrackItemAction) -> Unit
 ) {
     val state = rememberSwipeToDismissBoxState()
     LaunchedEffect(state.settledValue) {
@@ -62,6 +64,7 @@ fun TrackItem(
         backgroundContent = { TrackItemBackground() }
     ) {
         TrackItemContent(
+            colors = colors,
             data = data,
             onAction = onAction
         )
@@ -69,7 +72,7 @@ fun TrackItem(
 }
 
 @Composable
-fun TrackItemBackground(modifier: Modifier = Modifier) {
+private fun TrackItemBackground(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.fillMaxSize()
             .background(color = MaterialTheme.colorScheme.primary),
@@ -85,10 +88,11 @@ fun TrackItemBackground(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun TrackItemContent(
+private fun TrackItemContent(
     modifier: Modifier = Modifier,
+    colors: ListItemColors,
     data: TrackItemData,
-    onAction: (TrackItemAction) -> Unit
+    onAction: (action: TrackItemAction) -> Unit
 ) {
     ListItem(
         modifier = modifier
@@ -114,14 +118,13 @@ fun TrackItemContent(
                 contentDescription = data.title,
             )
         },
-        colors = if (data.isCurrentlyPlaying) {
-            ListItemDefaults.colors(
+        colors = when {
+            data.isCurrentlyPlaying -> ListItemDefaults.colors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 headlineColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 supportingColor = MaterialTheme.colorScheme.onPrimaryContainer
             )
-        } else {
-            ListItemDefaults.colors()
+            else -> colors
         }
     )
 }

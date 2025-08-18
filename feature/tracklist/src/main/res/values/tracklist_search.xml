@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tracklist_search_placeholder">Search music</string>
+    <string name="tracklist_search_back">Back</string>
+    <string name="tracklist_search_clear">Clear</string>
+</resources>

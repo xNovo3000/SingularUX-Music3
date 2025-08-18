@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tracklist_content_no_permission_rationale">The permission to read your music library was not given to this application. In order to display and play any track, please give the permission</string>
+    <string name="tracklist_content_no_permission_button">Give permission</string>
+    <string name="tracklist_content_no_tracks_rationale">There are no tracks in your music library</string>
+</resources>
