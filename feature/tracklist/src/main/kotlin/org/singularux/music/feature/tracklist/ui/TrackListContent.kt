@@ -3,7 +3,7 @@ package org.singularux.music.feature.tracklist.ui
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,19 +17,19 @@ fun TrackListContent(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues,
     items: List<TrackItemData>,
-    onItemAction: (TrackItemData, TrackItemAction) -> Unit
+    onItemAction: (index: Int, action: TrackItemAction) -> Unit
 ) {
     LazyColumn(
         modifier = modifier,
         contentPadding = contentPadding
     ) {
-        items(
+        itemsIndexed(
             items = items,
-            key = { it.id }
-        ) { trackItemData ->
+            key = { _, item -> item.id }
+        ) { index, data ->
             TrackItem(
-                data = trackItemData,
-                onAction = { onItemAction(trackItemData, it) }
+                data = data,
+                onAction = { onItemAction(index, it) }
             )
         }
     }
@@ -57,7 +57,7 @@ private fun Preview() {
                         isCurrentlyPlaying = it == 4
                     )
                 },
-                onItemAction = { data, action ->
+                onItemAction = { index, action ->
 
                 }
             )

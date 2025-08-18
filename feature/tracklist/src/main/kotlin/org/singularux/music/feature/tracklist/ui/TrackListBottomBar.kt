@@ -70,16 +70,18 @@ fun TrackListBottomBar(
         ListItem(
             headlineContent = {
                 val text = when (data) {
-                    is TrackListBottomBarData.Idle -> stringResource(R.string.tracklist_bottom_bar_unknown_track)
+                    is TrackListBottomBarData.Idle -> stringResource(R.string.tracklist_bottom_bar_no_track)
                     is TrackListBottomBarData.Playing -> data.title
                 }
                 Text(text = text)
             },
             supportingContent = {
-                val text = if (data is TrackListBottomBarData.Playing && data.artistName != null) {
-                    data.artistName
-                } else {
-                    stringResource(R.string.track_item_unknown_artist)
+                val text = when (data) {
+                    is TrackListBottomBarData.Playing -> when (data.artistName) {
+                        null -> stringResource(R.string.track_item_unknown_artist)
+                        else -> data.artistName
+                    }
+                    is TrackListBottomBarData.Idle -> stringResource(R.string.tracklist_bottom_bar_no_artist)
                 }
                 Text(text = text)
             },
@@ -143,7 +145,19 @@ fun TrackListBottomBar(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun Preview() {
+private fun PreviewIdle() {
+    MusicTheme {
+        TrackListBottomBar(
+            data = TrackListBottomBarData.Idle,
+            onAction = {}
+        )
+    }
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun PreviewPlaying() {
     MusicTheme {
         TrackListBottomBar(
             data = TrackListBottomBarData.Playing(

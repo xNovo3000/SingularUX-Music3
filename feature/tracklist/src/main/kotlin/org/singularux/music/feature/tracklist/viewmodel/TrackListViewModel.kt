@@ -5,4 +5,22 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class TrackListViewModel @Inject constructor() : ViewModel()
+class TrackListViewModel @Inject constructor() : ViewModel() {
+
+    fun play() {
+
+    }
+
+    fun pause() {
+
+    }
+
+    fun playFromIndex(index: Int) {
+
+    }
+
+    fun shuffle() {
+
+    }
+
+}
