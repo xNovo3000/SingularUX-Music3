@@ -76,7 +76,7 @@ fun TrackListContentNoTracks(modifier: Modifier = Modifier) {
     ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.tracklist_content_no_permission_rationale),
+            text = stringResource(R.string.tracklist_content_no_tracks_rationale),
             textAlign = TextAlign.Center
         )
     }
