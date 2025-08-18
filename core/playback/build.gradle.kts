@@ -43,6 +43,8 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    // KotlinX
+    implementation(libs.kotlinx.coroutines.guava)
     // Media3
     implementation(libs.media3.exoplayer)
     implementation(libs.media3.session)

@@ -2,7 +2,6 @@
 # Plugins
 agp = "8.12.0"
 kotlin = "2.2.10"
-kotlinx-serialization = "1.9.0"
 ksp = "2.2.10-2.0.2"
 hilt = "2.57"
 # Libraries
@@ -14,6 +13,8 @@ compose-bom = "2025.08.00"
 compose-material3 = "1.5.0-alpha02"
 compose-accompanist = "0.37.3"
 hilt-navigation = "1.2.0"
+kotlinx-coroutines = "1.10.2"
+kotlinx-serialization = "1.9.0"
 lifecycle = "2.10.0-alpha02"
 media3 = "1.8.0"
 navigation3 = "1.0.0-alpha07"
@@ -30,6 +31,7 @@ hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation" }
 # KotlinX
+kotlinx-coroutines-guava = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-guava", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
 # Jetpack Compose
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
