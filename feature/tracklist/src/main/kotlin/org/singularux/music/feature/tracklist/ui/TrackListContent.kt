@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,12 +27,14 @@ import kotlin.time.Duration.Companion.seconds
 @Composable
 fun TrackListContent(
     modifier: Modifier = Modifier,
+    state: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues,
     items: List<TrackItemData>,
     onItemAction: (index: Int, action: TrackItemAction) -> Unit
 ) {
     LazyColumn(
         modifier = modifier,
+        state = state,
         contentPadding = contentPadding
     ) {
         itemsIndexed(

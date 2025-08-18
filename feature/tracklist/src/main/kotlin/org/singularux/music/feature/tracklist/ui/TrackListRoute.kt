@@ -14,6 +14,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.rememberPermissionState
 import org.singularux.music.feature.tracklist.viewmodel.TrackListViewModel
 
@@ -60,14 +61,12 @@ fun TrackListRoute(viewModel: TrackListViewModel) {
             )
         }
     ) { innerPadding ->
-        val readMusicPermissionLauncher = rememberPermissionState(viewModel.readMusicPermission)
-        if (readMusicPermissionLauncher.status.isGranted) {
-            val trackList by viewModel.trackList.collectAsStateWithLifecycle()
-            TrackListContent(
-                contentPadding = innerPadding,
-                items = trackList,
-                onItemAction = { index, action -> }
-            )
-        }
+        val trackList by viewModel.trackList.collectAsStateWithLifecycle()
+        TrackListContent(
+            contentPadding = innerPadding,
+            state = contentState,
+            items = trackList,
+            onItemAction = { index, action -> }
+        )
     }
 }

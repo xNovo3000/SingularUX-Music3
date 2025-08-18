@@ -20,20 +20,17 @@ import javax.inject.Inject
 @HiltViewModel
 class TrackListViewModel @Inject constructor(
     getTrackListByNameUseCase: GetTrackListByNameUseCase,
-    listenTrackListUseCase: ListenTrackListUseCase,
-    musicPermissionManager: MusicPermissionManager
+    listenTrackListUseCase: ListenTrackListUseCase
 ) : ViewModel() {
 
     val trackList = listenTrackListUseCase()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     val searchBarTextFieldState = TextFieldState()
     val searchTrackList = snapshotFlow { searchBarTextFieldState.text }
         .debounce(150)
         .map { getTrackListByNameUseCase(it.toString()) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
-
-    val readMusicPermission = musicPermissionManager.getPermissionString(MusicPermission.READ_MUSIC)
 
     fun play() {
 

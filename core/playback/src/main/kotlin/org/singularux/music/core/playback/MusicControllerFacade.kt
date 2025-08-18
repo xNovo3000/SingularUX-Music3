@@ -22,7 +22,7 @@ class MusicControllerFacade(
         private const val TAG = "MusicControllerFacade"
     }
 
-    private val mediaControllerDeferred: Deferred<MediaController>
+    val mediaControllerDeferred: Deferred<MediaController>
     var mediaController: MediaController? = null
         private set
 
@@ -39,20 +39,6 @@ class MusicControllerFacade(
                 mediaController = mediaControllerDeferred.await()
             } catch (e: Exception) {
                 Log.e(TAG, "Cannot get MediaController", e)
-            }
-        }
-    }
-
-    fun addListener(listener: Player.Listener) {
-        coroutineScope.launch {
-            val mediaController = try {
-                mediaControllerDeferred.await()
-            } catch (e: Exception) {
-                Log.e(TAG, "Cannot get MediaController", e)
-                return@launch
-            }
-            withContext(Dispatchers.Main) {
-                mediaController.addListener(listener)
             }
         }
     }

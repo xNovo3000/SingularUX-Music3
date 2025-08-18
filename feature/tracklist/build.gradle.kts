@@ -68,4 +68,6 @@ dependencies {
     implementation(libs.compose.accompanist.permissions)
     // Lifecycle
     implementation(libs.lifecycle.viewmodel)
+    // Media 3
+    implementation(libs.media3.session)
 }
