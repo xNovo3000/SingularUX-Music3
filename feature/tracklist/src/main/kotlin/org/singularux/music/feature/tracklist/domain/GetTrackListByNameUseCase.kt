@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class GetTrackListByNameUseCase @Inject constructor() {
 
-    suspend operator fun invoke(): List<TrackItemData> {
+    suspend operator fun invoke(value: String): List<TrackItemData> {
         return emptyList()
     }
 
