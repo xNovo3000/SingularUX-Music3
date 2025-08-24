@@ -38,10 +38,11 @@ fun TrackListRoute(viewModel: TrackListViewModel) {
                 inputField = inputField,
                 scrollBehavior = searchBarScrollBehavior
             )
+            val searchTrackList by viewModel.searchTrackList.collectAsStateWithLifecycle()
             TrackListSearchBarExpanded(
                 state = searchBarState,
                 inputField = inputField,
-                items = emptyList(),
+                items = searchTrackList,
                 onItemAction = { index, action -> }
             )
         },
