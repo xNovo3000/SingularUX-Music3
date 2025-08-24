@@ -18,6 +18,7 @@ import org.singularux.music.feature.tracklist.ui.TrackListRoute
 
 sealed class MusicRoute : NavKey {
     @Serializable data object TrackList : MusicRoute()
+    @Serializable data object NowPlaying : MusicRoute()
 }
 
 @Composable
@@ -36,6 +37,9 @@ fun MusicUI() {
                 entryProvider = entryProvider {
                     entry<MusicRoute.TrackList> {
                         TrackListRoute(viewModel = hiltViewModel())
+                    }
+                    entry<MusicRoute.NowPlaying> {
+                        // TODO
                     }
                 }
             )

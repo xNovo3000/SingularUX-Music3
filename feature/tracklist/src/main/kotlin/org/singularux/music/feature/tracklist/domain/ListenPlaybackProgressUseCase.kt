@@ -22,19 +22,17 @@ class ListenPlaybackProgressUseCase @Inject constructor(
         private const val UPDATE_DELAY_MS = 300L
     }
 
-    operator fun invoke(): Flow<PlaybackProgress> {
-        return channelFlow {
-            val mediaController = musicControllerFacade.mediaControllerDeferred.await()
-            while (true) {
-                val (current, total) = withContext(Dispatchers.Main) {
-                    Pair(mediaController.currentPosition, max(mediaController.contentDuration, 0))
-                }
-                val progress = (current.toDouble() / total.toDouble()).toFloat()
-                trySend(PlaybackProgress(progress = progress))
-                    .onSuccess { Log.v(TAG, "Sent $it") }
-                    .onFailure { Log.e(TAG, "Cannot send progress", it) }
-                delay(UPDATE_DELAY_MS)
+    operator fun invoke(): Flow<PlaybackProgress> = channelFlow {
+        val mediaController = musicControllerFacade.mediaControllerDeferred.await()
+        while (true) {
+            val (current, total) = withContext(Dispatchers.Main) {
+                Pair(mediaController.currentPosition, max(mediaController.contentDuration, 0))
             }
+            val progress = (current.toDouble() / total.toDouble()).toFloat()
+            trySend(PlaybackProgress(progress = progress))
+                .onSuccess { Log.v(TAG, "Sent $it") }
+                .onFailure { Log.e(TAG, "Cannot send progress", it) }
+            delay(UPDATE_DELAY_MS)
         }
     }
 

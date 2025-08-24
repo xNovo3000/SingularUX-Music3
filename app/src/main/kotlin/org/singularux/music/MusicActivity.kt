@@ -15,15 +15,18 @@ class MusicActivity : ComponentActivity() {
     @Inject lateinit var musicControllerFacade: MusicControllerFacade
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Start activity with splash screen and edge-to-edge
         installSplashScreen()
             .setKeepOnScreenCondition { !musicControllerFacade.isReady }
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        // Bootstrap into Compose UI
         setContent { MusicUI() }
     }
 
     override fun onDestroy() {
-        musicControllerFacade.release()
+        // Release the MediaController only when the activity is being killed
+        if (isFinishing) musicControllerFacade.release()
         super.onDestroy()
     }
 

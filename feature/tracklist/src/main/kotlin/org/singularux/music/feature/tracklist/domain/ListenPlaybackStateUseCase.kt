@@ -1,7 +1,7 @@
 package org.singularux.music.feature.tracklist.domain
 
 import android.util.Log
-import androidx.media3.common.MediaMetadata
+import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
@@ -11,34 +11,30 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
 import org.singularux.music.core.playback.MusicControllerFacade
-import org.singularux.music.feature.tracklist.model.PlaybackMetadata
+import org.singularux.music.feature.tracklist.model.PlaybackState
 import javax.inject.Inject
 
-class ListenPlaybackMetadataUseCase @Inject constructor(
+class ListenPlaybackStateUseCase @Inject constructor(
     private val musicControllerFacade: MusicControllerFacade
 ) {
 
     companion object {
-        private const val TAG = "ListenPlaybackMetadataUseCase"
+        private const val TAG = "ListenPlaybackStateUseCase"
     }
 
-    operator fun invoke(): Flow<PlaybackMetadata?> = callbackFlow {
+    operator fun invoke(): Flow<PlaybackState> = callbackFlow {
         val mediaController = musicControllerFacade.mediaControllerDeferred.await()
         val listener = object : Player.Listener {
-            override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) = update()
+            override fun onIsPlayingChanged(isPlaying: Boolean) = update()
+            override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) = update()
             fun update() {
-                val playbackMetadata = if (mediaController.mediaMetadata != MediaMetadata.EMPTY) {
-                    PlaybackMetadata(
-                        title = mediaController.mediaMetadata.title?.toString() ?: "",
-                        artistName = mediaController.mediaMetadata.artist?.toString(),
-                        artworkUri = mediaController.mediaMetadata.artworkUri
-                    )
-                } else {
-                    null
-                }
-                trySend(element = playbackMetadata)
+                val playbackState = PlaybackState(
+                    isEnabled = mediaController.currentMediaItem != null,
+                    isPlaying = mediaController.isPlaying
+                )
+                trySend(element = playbackState)
                     .onSuccess { Log.d(TAG, "Sent $it") }
-                    .onFailure { Log.e(TAG, "Cannot send PlaybackMetadata", it) }
+                    .onFailure { Log.e(TAG, "Cannot send PlaybackState", it) }
             }
         }
         mediaController.addListener(listener)

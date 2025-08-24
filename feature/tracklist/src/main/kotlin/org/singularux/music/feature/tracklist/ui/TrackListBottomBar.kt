@@ -37,8 +37,8 @@ sealed class TrackListBottomBarData {
     data class Playing(
         val title: String,
         val artistName: String?,
-        val progress: Float,
         val artworkUri: Uri?,
+        val progress: Float,
         val isPlaying: Boolean
     ) : TrackListBottomBarData()
 }
@@ -163,8 +163,8 @@ private fun PreviewPlaying() {
             data = TrackListBottomBarData.Playing(
                 title = "In The End",
                 artistName = "Linkin Park",
-                progress = 0.21F,
                 artworkUri = null,
+                progress = 0.21F,
                 isPlaying = true
             ),
             onAction = {}

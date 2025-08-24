@@ -6,6 +6,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.rememberSearchBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -14,7 +15,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.rememberPermissionState
 import org.singularux.music.feature.tracklist.viewmodel.TrackListViewModel
 
@@ -55,18 +55,30 @@ fun TrackListRoute(viewModel: TrackListViewModel) {
             )
         },
         bottomBar = {
+            val playbackData by viewModel.playbackData.collectAsStateWithLifecycle()
             TrackListBottomBar(
-                data = TrackListBottomBarData.Idle,
+                data = playbackData,
                 onAction = {}
             )
         }
     ) { innerPadding ->
-        val trackList by viewModel.trackList.collectAsStateWithLifecycle()
-        TrackListContent(
-            contentPadding = innerPadding,
-            state = contentState,
-            items = trackList,
-            onItemAction = { index, action -> }
-        )
+        val readMusicPermissionState = rememberPermissionState(viewModel.readMusicPermission)
+        LaunchedEffect(Unit) { readMusicPermissionState.launchPermissionRequest() }
+        if (readMusicPermissionState.status.isGranted) {
+            val trackList by viewModel.trackList.collectAsStateWithLifecycle()
+            TrackListContent(
+                contentPadding = innerPadding,
+                state = contentState,
+                items = trackList,
+                onItemAction = { index, action -> }
+            )
+        } else {
+            TrackListContentNoPermission(
+                onGivePermissionClick = { /* TODO: Go to the permission screen using intents */ }
+            )
+        }
     }
+    val readPhoneStatePermissionState = rememberPermissionState(viewModel.readPhoneStatePermission)
+    LaunchedEffect(Unit) { readPhoneStatePermissionState.launchPermissionRequest() }
+    // TODO: Show SnackBar when the user does not want to let this app listen phone calls
 }
