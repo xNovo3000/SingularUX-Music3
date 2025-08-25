@@ -1,28 +1,44 @@
 package org.singularux.music.feature.tracklist.ui
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.rememberSearchBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import kotlinx.coroutines.launch
+import org.singularux.music.feature.tracklist.R
 import org.singularux.music.feature.tracklist.viewmodel.TrackListViewModel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
 fun TrackListRoute(viewModel: TrackListViewModel) {
     val contentState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
     val searchBarScrollBehavior = SearchBarDefaults.enterAlwaysSearchBarScrollBehavior()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val snackbarRationaleString = stringResource(R.string.tracklist_snackbar_rationale)
+    val snackbarActionString = stringResource(R.string.tracklist_snackbar_action)
     Scaffold(
         modifier = Modifier.nestedScroll(searchBarScrollBehavior.nestedScrollConnection),
         topBar = {
@@ -75,12 +91,44 @@ fun TrackListRoute(viewModel: TrackListViewModel) {
             )
         }
     ) { innerPadding ->
-        val readMusicPermissionState = rememberPermissionState(viewModel.readMusicPermission)
-        LaunchedEffect(Unit) { readMusicPermissionState.launchPermissionRequest() }
-        if (readMusicPermissionState.status.isGranted) {
+        // Permission state holders
+        var hasReadMusicPermission by remember { mutableStateOf(false) }
+        // Request permissions
+        val permissionRequestState = rememberMultiplePermissionsState(
+            permissions = listOf(viewModel.readMusicPermission, viewModel.readPhoneStatePermission),
+            onPermissionsResult = { result ->
+                result.forEach { permission, result ->
+                    when (permission) {
+                        viewModel.readMusicPermission -> hasReadMusicPermission = result
+                        viewModel.readPhoneStatePermission -> if (!result) {
+                            coroutineScope.launch {
+                                snackbarHostState.showSnackbar(
+                                    message = snackbarRationaleString,
+                                    actionLabel = snackbarActionString,
+                                    withDismissAction = true
+                                ).let {
+                                    if (it == SnackbarResult.ActionPerformed) {
+                                        // TODO: Go to the permission screen using intents
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        )
+        LaunchedEffect(Unit) { permissionRequestState.launchMultiplePermissionRequest() }
+        // Show track list only if permission is granted
+        if (hasReadMusicPermission) {
+            val layoutDirection = LocalLayoutDirection.current
             val trackList by viewModel.trackList.collectAsStateWithLifecycle()
             TrackListContent(
-                contentPadding = innerPadding,
+                contentPadding = PaddingValues(
+                    start = innerPadding.calculateStartPadding(layoutDirection),
+                    top = innerPadding.calculateTopPadding(),
+                    end = innerPadding.calculateEndPadding(layoutDirection),
+                    bottom = innerPadding.calculateBottomPadding() + 92.dp
+                ),
                 state = contentState,
                 items = trackList,
                 onItemAction = { index, item, action ->
@@ -96,5 +144,4 @@ fun TrackListRoute(viewModel: TrackListViewModel) {
             )
         }
     }
-    // TODO: Show SnackBar when the user does not want to let this app listen phone calls
 }
