@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -73,7 +74,11 @@ fun TrackListBottomBar(
                     is TrackListBottomBarData.Idle -> stringResource(R.string.tracklist_bottom_bar_no_track)
                     is TrackListBottomBarData.Playing -> data.title
                 }
-                Text(text = text)
+                Text(
+                    text = text,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             },
             supportingContent = {
                 val text = when (data) {
@@ -83,7 +88,11 @@ fun TrackListBottomBar(
                     }
                     is TrackListBottomBarData.Idle -> stringResource(R.string.tracklist_bottom_bar_no_artist)
                 }
-                Text(text = text)
+                Text(
+                    text = text,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             },
             leadingContent = {
                 AsyncImage(

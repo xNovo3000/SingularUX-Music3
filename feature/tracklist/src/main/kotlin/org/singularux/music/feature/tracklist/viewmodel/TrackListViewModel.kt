@@ -15,8 +15,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.singularux.music.core.permission.MusicPermission
-import org.singularux.music.core.permission.MusicPermissionManager
-import org.singularux.music.core.playback.MusicControllerFacade
 import org.singularux.music.feature.tracklist.domain.GetPlatformPermissionStringUseCase
 import org.singularux.music.feature.tracklist.domain.GetTrackListByNameUseCase
 import org.singularux.music.feature.tracklist.domain.ListenPlaybackMetadataUseCase
@@ -83,11 +81,22 @@ class TrackListViewModel @Inject constructor(
         viewModelScope.launch { pauseMusicUseCase() }
     }
 
-    fun playFromIndex(index: Int) {
+    fun playFromTrackList(index: Int) {
         viewModelScope.launch {
             overrideTimelineAndSeekToUseCase(
                 tagPrefix = "tracks",
                 newTracks = trackList.value.map { it.copy() },
+                index = index
+            )
+            playMusicUseCase()
+        }
+    }
+
+    fun playFromSearchTrackList(index: Int) {
+        viewModelScope.launch {
+            overrideTimelineAndSeekToUseCase(
+                tagPrefix = "tracks",
+                newTracks = searchTrackList.value.map { it.copy() },
                 index = index
             )
             playMusicUseCase()

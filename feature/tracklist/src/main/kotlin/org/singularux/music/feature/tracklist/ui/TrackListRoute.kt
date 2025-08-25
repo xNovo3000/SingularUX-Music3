@@ -45,7 +45,7 @@ fun TrackListRoute(viewModel: TrackListViewModel) {
                 items = searchTrackList,
                 onItemAction = { index, item, action ->
                     when (action) {
-                        TrackItemAction.PLAY -> viewModel.playFromIndex(index)
+                        TrackItemAction.PLAY -> viewModel.playFromSearchTrackList(index)
                         TrackItemAction.ADD_TO_QUEUE -> viewModel.addToQueue(index)
                     }
                 }
@@ -53,7 +53,9 @@ fun TrackListRoute(viewModel: TrackListViewModel) {
         },
         floatingActionButton = {
             val expanded by remember {
-                derivedStateOf { contentState.firstVisibleItemIndex == 0 }
+                derivedStateOf {
+                    contentState.lastScrolledBackward || contentState.firstVisibleItemIndex == 0
+                }
             }
             TrackListFab(
                 expanded = expanded,
@@ -81,7 +83,12 @@ fun TrackListRoute(viewModel: TrackListViewModel) {
                 contentPadding = innerPadding,
                 state = contentState,
                 items = trackList,
-                onItemAction = { index, item, action -> }
+                onItemAction = { index, item, action ->
+                    when (action) {
+                        TrackItemAction.PLAY -> viewModel.playFromTrackList(index)
+                        TrackItemAction.ADD_TO_QUEUE -> viewModel.addToQueue(index)
+                    }
+                }
             )
         } else {
             TrackListContentNoPermission(
@@ -89,7 +96,5 @@ fun TrackListRoute(viewModel: TrackListViewModel) {
             )
         }
     }
-    val readPhoneStatePermissionState = rememberPermissionState(viewModel.readPhoneStatePermission)
-    LaunchedEffect(Unit) { readPhoneStatePermissionState.launchPermissionRequest() }
     // TODO: Show SnackBar when the user does not want to let this app listen phone calls
 }

@@ -14,7 +14,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material3.AppBarWithSearch
 import androidx.compose.material3.ExpandedFullScreenSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -26,6 +25,7 @@ import androidx.compose.material3.SearchBarScrollBehavior
 import androidx.compose.material3.SearchBarState
 import androidx.compose.material3.SearchBarValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopSearchBar
 import androidx.compose.material3.rememberSearchBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -108,7 +108,9 @@ fun TrackListSearchBarCollapsed(
     inputField: @Composable () -> Unit,
     scrollBehavior: SearchBarScrollBehavior? = null
 ) {
-    AppBarWithSearch(
+    // AppBarWithSearch does not work as expected
+    @Suppress("DEPRECATION")
+    TopSearchBar(
         modifier = modifier,
         state = state,
         inputField = inputField,

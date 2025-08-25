@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -98,7 +99,11 @@ private fun TrackItemContent(
         modifier = modifier
             .clickable(onClick = { onAction(TrackItemAction.PLAY) }),
         headlineContent = {
-            Text(text = data.title)
+            Text(
+                text = data.title,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
         },
         supportingContent = {
             val result = stringResource(
@@ -107,7 +112,11 @@ private fun TrackItemContent(
                 data.duration.inWholeSeconds % 60,
                 data.artistName ?: stringResource(R.string.track_item_unknown_artist)
             )
-            Text(text = result)
+            Text(
+                text = result,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
         },
         leadingContent = {
             AsyncImage(
