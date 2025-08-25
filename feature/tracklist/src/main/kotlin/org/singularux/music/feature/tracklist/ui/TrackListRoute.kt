@@ -43,7 +43,12 @@ fun TrackListRoute(viewModel: TrackListViewModel) {
                 state = searchBarState,
                 inputField = inputField,
                 items = searchTrackList,
-                onItemAction = { index, action -> }
+                onItemAction = { index, item, action ->
+                    when (action) {
+                        TrackItemAction.PLAY -> viewModel.playFromIndex(index)
+                        TrackItemAction.ADD_TO_QUEUE -> viewModel.addToQueue(index)
+                    }
+                }
             )
         },
         floatingActionButton = {
@@ -52,14 +57,19 @@ fun TrackListRoute(viewModel: TrackListViewModel) {
             }
             TrackListFab(
                 expanded = expanded,
-                onClick = {}
+                onClick = { viewModel.playShuffled() }
             )
         },
         bottomBar = {
             val playbackData by viewModel.playbackData.collectAsStateWithLifecycle()
             TrackListBottomBar(
                 data = playbackData,
-                onAction = {}
+                onAction = { action ->
+                    when (action) {
+                        TrackListBottomBarAction.PLAY -> viewModel.play()
+                        TrackListBottomBarAction.PAUSE -> viewModel.pause()
+                    }
+                }
             )
         }
     ) { innerPadding ->
@@ -71,7 +81,7 @@ fun TrackListRoute(viewModel: TrackListViewModel) {
                 contentPadding = innerPadding,
                 state = contentState,
                 items = trackList,
-                onItemAction = { index, action -> }
+                onItemAction = { index, item, action -> }
             )
         } else {
             TrackListContentNoPermission(

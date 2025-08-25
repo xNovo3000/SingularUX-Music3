@@ -114,6 +114,7 @@ fun TrackListSearchBarCollapsed(
         inputField = inputField,
         scrollBehavior = scrollBehavior
     )
+    // Status bar protection
     val surfaceColor = MaterialTheme.colorScheme.surface
     val calculatedHeight = WindowInsets.statusBars.getTop(LocalDensity.current).toFloat()
     Canvas(modifier = Modifier.fillMaxWidth()) {
@@ -132,7 +133,7 @@ fun TrackListSearchBarExpanded(
     state: SearchBarState,
     inputField: @Composable () -> Unit,
     items: List<TrackItemData>,
-    onItemAction: (index: Int, action: TrackItemAction) -> Unit
+    onItemAction: (index: Int, item: TrackItemData, action: TrackItemAction) -> Unit
 ) {
     ExpandedFullScreenSearchBar(
         modifier = modifier,
@@ -149,7 +150,7 @@ fun TrackListSearchBarExpanded(
                         containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
                     ),
                     data = item,
-                    onAction = { onItemAction(index, it) }
+                    onAction = { onItemAction(index, item, it) }
                 )
             }
         }
@@ -185,7 +186,7 @@ private fun PreviewExpanded() {
                     isCurrentlyPlaying = it == 4
                 )
             },
-            onItemAction = { index, action -> }
+            onItemAction = { index, item, action -> }
         )
     }
 }

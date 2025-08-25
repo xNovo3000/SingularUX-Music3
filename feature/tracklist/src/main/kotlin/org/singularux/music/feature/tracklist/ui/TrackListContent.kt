@@ -30,7 +30,7 @@ fun TrackListContent(
     state: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues,
     items: List<TrackItemData>,
-    onItemAction: (index: Int, action: TrackItemAction) -> Unit
+    onItemAction: (index: Int, item: TrackItemData, action: TrackItemAction) -> Unit
 ) {
     LazyColumn(
         modifier = modifier,
@@ -41,10 +41,10 @@ fun TrackListContent(
             items = items,
             key = { _, item -> item.id },
             contentType = { _, type -> type }
-        ) { index, data ->
+        ) { index, item ->
             TrackItem(
-                data = data,
-                onAction = { onItemAction(index, it) }
+                data = item,
+                onAction = { onItemAction(index, item, it) }
             )
         }
     }
@@ -108,7 +108,7 @@ private fun Preview() {
                         isCurrentlyPlaying = it == 4
                     )
                 },
-                onItemAction = { index, action -> }
+                onItemAction = { index, item, action -> }
             )
         }
     }
