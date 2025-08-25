@@ -3,7 +3,9 @@ package org.singularux.music.data.library.repository
 import android.content.Context
 import android.provider.MediaStore
 import android.util.Log
+import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
+import androidx.core.net.toUri
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.singularux.music.core.permission.MusicPermission
@@ -26,7 +28,7 @@ internal class TrackRepositoryAndroid(
             MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.DISPLAY_NAME,
             MediaStore.Audio.Media.ARTIST,
             MediaStore.Audio.Media.DURATION,
-            MediaStore.Audio.Media.ALBUM_ID
+            MediaStore.Audio.Media.ALBUM_ID, MediaStore.Audio.Media.ALBUM
         )
         private const val SORT_ORDER = MediaStore.Audio.Media.DEFAULT_SORT_ORDER
 
@@ -39,6 +41,8 @@ internal class TrackRepositoryAndroid(
                 "(${MediaStore.Audio.Media.TITLE} LIKE ? OR " +
                 "${MediaStore.Audio.Media.DISPLAY_NAME} LIKE ?)"
         private val GET_BY_NAME_SELECTION_ARGS = arrayOf("1", "0", "", "")
+
+        private const val ARTWORK_URI_STRING = "content://media/external/audio/albumart"
 
     }
 
@@ -57,9 +61,19 @@ internal class TrackRepositoryAndroid(
                         element = TrackEntity(
                             id = cursor.getLong(0),
                             title = cursor.getStringOrNull(1) ?: cursor.getString(2),
-                            artistName = cursor.getStringOrNull(3),
+                            artistName = cursor.getStringOrNull(3)?.let {
+                                when (it) {
+                                    "<unknown>" -> null
+                                    else -> it
+                                }
+                            },
                             duration = cursor.getLong(4).milliseconds,
-                            artworkUri = null
+                            artworkUri = cursor.getStringOrNull(6)?.let {
+                                when (it) {
+                                    "<unknown>" -> null
+                                    else -> "$ARTWORK_URI_STRING/${cursor.getLongOrNull(5)}".toUri()
+                                }
+                            }
                         )
                     )
                 }
@@ -87,9 +101,19 @@ internal class TrackRepositoryAndroid(
                             element = TrackEntity(
                                 id = cursor.getLong(0),
                                 title = cursor.getStringOrNull(1) ?: cursor.getString(2),
-                                artistName = cursor.getStringOrNull(3),
+                                artistName = cursor.getStringOrNull(3)?.let {
+                                    when (it) {
+                                        "<unknown>" -> null
+                                        else -> it
+                                    }
+                                },
                                 duration = cursor.getLong(4).milliseconds,
-                                artworkUri = null
+                                artworkUri = cursor.getStringOrNull(6)?.let {
+                                    when (it) {
+                                        "<unknown>" -> null
+                                        else -> "$ARTWORK_URI_STRING/${cursor.getLongOrNull(5)}".toUri()
+                                    }
+                                }
                             )
                         )
                     }
