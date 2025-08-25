@@ -46,7 +46,7 @@ class ListenTrackListUseCase @Inject constructor(
                                     artistName = trackEntity.artistName,
                                     duration = trackEntity.duration,
                                     artworkUri = trackEntity.artworkUri,
-                                    isCurrentlyPlaying = false  // TODO: Implement this
+                                    isCurrentlyPlaying = false  // Will be populated by the VM
                                 )
                             }
                     }

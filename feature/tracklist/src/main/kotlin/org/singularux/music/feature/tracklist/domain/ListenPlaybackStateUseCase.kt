@@ -33,7 +33,7 @@ class ListenPlaybackStateUseCase @Inject constructor(
                     isPlaying = mediaController.isPlaying
                 )
                 trySend(element = playbackState)
-                    .onSuccess { Log.d(TAG, "Sent $it") }
+                    .onSuccess { Log.d(TAG, "Sent $playbackState") }
                     .onFailure { Log.e(TAG, "Cannot send PlaybackState", it) }
             }
         }

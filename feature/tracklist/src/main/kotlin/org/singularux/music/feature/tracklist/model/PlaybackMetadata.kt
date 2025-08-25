@@ -5,5 +5,6 @@ import android.net.Uri
 data class PlaybackMetadata(
     val title: String,
     val artistName: String?,
-    val artworkUri: Uri?
+    val artworkUri: Uri?,
+    val playingFromExtra: String?
 )

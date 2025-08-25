@@ -28,9 +28,11 @@ class ListenPlaybackProgressUseCase @Inject constructor(
             val (current, total) = withContext(Dispatchers.Main) {
                 Pair(mediaController.currentPosition, max(mediaController.contentDuration, 0))
             }
-            val progress = (current.toDouble() / total.toDouble()).toFloat()
-            trySend(PlaybackProgress(progress = progress))
-                .onSuccess { Log.v(TAG, "Sent $it") }
+            val playbackProgress = PlaybackProgress(
+                progress = (current.toDouble() / total.toDouble()).toFloat()
+            )
+            trySend(element = playbackProgress)
+                .onSuccess { Log.v(TAG, "Sent $playbackProgress") }
                 .onFailure { Log.e(TAG, "Cannot send progress", it) }
             delay(UPDATE_DELAY_MS)
         }

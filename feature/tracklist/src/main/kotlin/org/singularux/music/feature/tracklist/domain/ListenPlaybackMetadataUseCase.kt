@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.channels.onSuccess
+import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
@@ -31,13 +32,14 @@ class ListenPlaybackMetadataUseCase @Inject constructor(
                     PlaybackMetadata(
                         title = mediaController.mediaMetadata.title?.toString() ?: "",
                         artistName = mediaController.mediaMetadata.artist?.toString(),
-                        artworkUri = mediaController.mediaMetadata.artworkUri
+                        artworkUri = mediaController.mediaMetadata.artworkUri,
+                        playingFromExtra = mediaController.mediaMetadata.extras?.getString("playing_from")
                     )
                 } else {
                     null
                 }
                 trySend(element = playbackMetadata)
-                    .onSuccess { Log.d(TAG, "Sent $it") }
+                    .onSuccess { Log.d(TAG, "Sent $playbackMetadata") }
                     .onFailure { Log.e(TAG, "Cannot send PlaybackMetadata", it) }
             }
         }

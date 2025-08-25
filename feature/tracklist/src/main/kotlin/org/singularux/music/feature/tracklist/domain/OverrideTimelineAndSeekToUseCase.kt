@@ -31,7 +31,7 @@ class OverrideTimelineAndSeekToUseCase @Inject constructor(
         }
         val mediaItemList = newTracks.map { trackItemData ->
             val trackItemUri = "${MediaStore.Audio.Media.EXTERNAL_CONTENT_URI}/${trackItemData.id}".toUri()
-            val extras = bundleOf("playing_from" to "tracks/${trackItemData.id}")
+            val extras = bundleOf("playing_from" to "$tagPrefix/${trackItemData.id}")
             val mediaMetadata = MediaMetadata.Builder()
                 .setTitle(trackItemData.title)
                 .setArtist(trackItemData.artistName)

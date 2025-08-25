@@ -26,6 +26,7 @@ import org.singularux.music.feature.tracklist.domain.PauseMusicUseCase
 import org.singularux.music.feature.tracklist.domain.PlayMusicUseCase
 import org.singularux.music.feature.tracklist.ui.TrackListBottomBarData
 import javax.inject.Inject
+import kotlin.collections.map
 
 @OptIn(FlowPreview::class)
 @HiltViewModel
@@ -41,13 +42,32 @@ class TrackListViewModel @Inject constructor(
     private val pauseMusicUseCase: PauseMusicUseCase
 ) : ViewModel() {
 
-    val trackList = listenTrackListUseCase()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    val trackList = combine(
+        listenTrackListUseCase(),
+        listenPlaybackMetadataUseCase()
+    ) { trackList, maybePlaybackMetadata ->
+        withContext(Dispatchers.Default) {
+            trackList.map {
+                it.copy(
+                    isCurrentlyPlaying = maybePlaybackMetadata?.playingFromExtra == "tracks/${it.id}"
+                )
+            }
+        }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val searchBarTextFieldState = TextFieldState()
     val searchTrackList = snapshotFlow { searchBarTextFieldState.text }
         .debounce(150)
         .map { getTrackListByNameUseCase(name = it.toString()) }
+        .combine(listenPlaybackMetadataUseCase()) { searchTrackList, maybePlaybackMetadata ->
+            withContext(Dispatchers.Default) {
+                searchTrackList.map {
+                    it.copy(
+                        isCurrentlyPlaying = maybePlaybackMetadata?.playingFromExtra == "search/${it.id}"
+                    )
+                }
+            }
+        }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val playbackData = combine(
@@ -95,7 +115,7 @@ class TrackListViewModel @Inject constructor(
     fun playFromSearchTrackList(index: Int) {
         viewModelScope.launch {
             overrideTimelineAndSeekToUseCase(
-                tagPrefix = "tracks",
+                tagPrefix = "search",
                 newTracks = searchTrackList.value.map { it.copy() },
                 index = index
             )
