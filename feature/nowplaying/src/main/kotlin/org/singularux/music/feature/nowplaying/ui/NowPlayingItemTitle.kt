@@ -14,23 +14,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import org.singularux.music.core.ui.MusicTheme
 import org.singularux.music.feature.nowplaying.R
 
+data class NowPlayingItemTitleData(
+    val title: String,
+    val artistName: String?
+)
+
 @Composable
 fun NowPlayingItemTitle(
     modifier: Modifier = Modifier,
-    title: String,
-    artistName: String?
+    data: NowPlayingItemTitleData
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = title,
-            style = MaterialTheme.typography.headlineMedium,
+            text = data.title,
+            style = MaterialTheme.typography.headlineLarge,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = artistName ?: stringResource(R.string.now_playing_item_title_unknown_artist),
+            text = data.artistName ?: stringResource(R.string.now_playing_item_title_unknown_artist),
             style = MaterialTheme.typography.titleMedium,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -46,8 +50,10 @@ private fun Preview() {
     MusicTheme {
         Surface {
             NowPlayingItemTitle(
-                title = "In The End",
-                artistName = "Linkin Park"
+                data = NowPlayingItemTitleData(
+                    title = "In The End",
+                    artistName = "Linkin Park"
+                )
             )
         }
     }

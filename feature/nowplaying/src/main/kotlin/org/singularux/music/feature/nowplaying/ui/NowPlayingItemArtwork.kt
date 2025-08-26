@@ -25,7 +25,7 @@ fun NowPlayingItemArtwork(
     AsyncImage(
         modifier = modifier
             .aspectRatio(1F)
-            .sizeIn(maxWidth = 250.dp, maxHeight = 250.dp)
+            .fillMaxSize()
             .clip(shape = MaterialTheme.shapes.extraLarge)
             .background(color = MaterialTheme.colorScheme.surfaceContainerHighest),
         model = artworkUri,
