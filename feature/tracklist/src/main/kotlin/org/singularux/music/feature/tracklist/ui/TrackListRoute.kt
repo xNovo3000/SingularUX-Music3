@@ -37,8 +37,9 @@ fun TrackListRoute(viewModel: TrackListViewModel) {
     val coroutineScope = rememberCoroutineScope()
     val searchBarScrollBehavior = SearchBarDefaults.enterAlwaysSearchBarScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
-    val snackbarRationaleString = stringResource(R.string.tracklist_snackbar_rationale)
-    val snackbarActionString = stringResource(R.string.tracklist_snackbar_action)
+    val snackbarReadPhoneRationaleString = stringResource(R.string.tracklist_snackbar_read_phone_rationale)
+    val snackbarReadPhoneActionString = stringResource(R.string.tracklist_snackbar_read_phone_action)
+    val snackbarAddedToQueueFeedback = stringResource(R.string.tracklist_snackbar_added_to_queue_feedback)
     Scaffold(
         modifier = Modifier.nestedScroll(searchBarScrollBehavior.nestedScrollConnection),
         topBar = {
@@ -62,7 +63,14 @@ fun TrackListRoute(viewModel: TrackListViewModel) {
                 onItemAction = { index, item, action ->
                     when (action) {
                         TrackItemAction.PLAY -> viewModel.playFromSearchTrackList(index)
-                        TrackItemAction.ADD_TO_QUEUE -> viewModel.addToQueue(index)
+                        TrackItemAction.ADD_TO_QUEUE -> {
+                            viewModel.addToQueue(index)
+                            coroutineScope.launch {
+                                snackbarHostState.showSnackbar(
+                                    message = snackbarAddedToQueueFeedback
+                                )
+                            }
+                        }
                     }
                 }
             )
@@ -103,8 +111,8 @@ fun TrackListRoute(viewModel: TrackListViewModel) {
                         viewModel.readPhoneStatePermission -> if (!result) {
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar(
-                                    message = snackbarRationaleString,
-                                    actionLabel = snackbarActionString,
+                                    message = snackbarReadPhoneRationaleString,
+                                    actionLabel = snackbarReadPhoneActionString,
                                     withDismissAction = true
                                 ).let {
                                     if (it == SnackbarResult.ActionPerformed) {
@@ -134,7 +142,14 @@ fun TrackListRoute(viewModel: TrackListViewModel) {
                 onItemAction = { index, item, action ->
                     when (action) {
                         TrackItemAction.PLAY -> viewModel.playFromTrackList(index)
-                        TrackItemAction.ADD_TO_QUEUE -> viewModel.addToQueue(index)
+                        TrackItemAction.ADD_TO_QUEUE -> {
+                            viewModel.addToQueue(index)
+                            coroutineScope.launch {
+                                snackbarHostState.showSnackbar(
+                                    message = snackbarAddedToQueueFeedback
+                                )
+                            }
+                        }
                     }
                 }
             )

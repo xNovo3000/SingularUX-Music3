@@ -124,7 +124,16 @@ class TrackListViewModel @Inject constructor(
     }
 
     fun playShuffled() {
-        // TODO: Implement
+        viewModelScope.launch {
+            overrideTimelineAndSeekToUseCase(
+                tagPrefix = "tracks",
+                newTracks = trackList.value
+                    .map { it.copy() }
+                    .shuffled(),
+                index = 0
+            )
+            playMusicUseCase()
+        }
     }
 
     fun addToQueue(index: Int) {

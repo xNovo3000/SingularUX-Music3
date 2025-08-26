@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="tracklist_snackbar_rationale">In order to pause the playback when a call is received the "Phone" permission is required</string>
-    <string name="tracklist_snackbar_action">Give permission</string>
+    <string name="tracklist_snackbar_read_phone_rationale">In order to pause the playback when a call is received the "Phone" permission is required</string>
+    <string name="tracklist_snackbar_read_phone_action">Give permission</string>
+    <string name="tracklist_snackbar_added_to_queue_feedback">Added to the queue</string>
 </resources>
