@@ -32,7 +32,10 @@ import org.singularux.music.feature.tracklist.viewmodel.TrackListViewModel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
-fun TrackListRoute(viewModel: TrackListViewModel) {
+fun TrackListRoute(
+    viewModel: TrackListViewModel,
+    onGoToNowPlayingRoute: () -> Unit
+) {
     val contentState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
     val searchBarScrollBehavior = SearchBarDefaults.enterAlwaysSearchBarScrollBehavior()
@@ -94,6 +97,7 @@ fun TrackListRoute(viewModel: TrackListViewModel) {
                     when (action) {
                         TrackListBottomBarAction.PLAY -> viewModel.play()
                         TrackListBottomBarAction.PAUSE -> viewModel.pause()
+                        TrackListBottomBarAction.GO_TO_NOW_PLAYING_ROUTE -> onGoToNowPlayingRoute()
                     }
                 }
             )

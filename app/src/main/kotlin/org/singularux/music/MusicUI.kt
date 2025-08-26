@@ -14,6 +14,7 @@ import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
 import kotlinx.serialization.Serializable
 import org.singularux.music.core.ui.MusicSurface
 import org.singularux.music.core.ui.MusicTheme
+import org.singularux.music.feature.nowplaying.ui.NowPlayingRoute
 import org.singularux.music.feature.tracklist.ui.TrackListRoute
 
 sealed class MusicRoute : NavKey {
@@ -36,10 +37,16 @@ fun MusicUI() {
                 ),
                 entryProvider = entryProvider {
                     entry<MusicRoute.TrackList> {
-                        TrackListRoute(viewModel = hiltViewModel())
+                        TrackListRoute(
+                            viewModel = hiltViewModel(),
+                            onGoToNowPlayingRoute = { backStack.add(MusicRoute.NowPlaying) }
+                        )
                     }
                     entry<MusicRoute.NowPlaying> {
-                        // TODO
+                        NowPlayingRoute(
+                            viewModel = hiltViewModel(),
+                            onGoBack = { backStack.removeLastOrNull() }
+                        )
                     }
                 }
             )

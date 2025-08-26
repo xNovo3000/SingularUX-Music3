@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="now_playing_item_buttons_pause">Pause</string>
+    <string name="now_playing_item_buttons_play">Play</string>
+    <string name="now_playing_item_buttons_skip_next">Next</string>
+    <string name="now_playing_item_buttons_skip_prev">Previous</string>
+</resources>

@@ -3,6 +3,7 @@ package org.singularux.music.feature.tracklist.ui
 import android.content.res.Configuration
 import android.net.Uri
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,7 +46,7 @@ sealed class TrackListBottomBarData {
 }
 
 enum class TrackListBottomBarAction {
-    PLAY, PAUSE  // TODO: Implement GO_TO_PLAYBACK_SCREEN
+    PLAY, PAUSE, GO_TO_NOW_PLAYING_ROUTE
 }
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -58,6 +59,7 @@ fun TrackListBottomBar(
     Column(
         modifier = modifier.fillMaxWidth()
             .background(color = MaterialTheme.colorScheme.surfaceContainer)
+            .clickable(onClick = { onAction(TrackListBottomBarAction.GO_TO_NOW_PLAYING_ROUTE) })
     ) {
         LinearProgressIndicator(
             modifier = Modifier.fillMaxWidth(),
