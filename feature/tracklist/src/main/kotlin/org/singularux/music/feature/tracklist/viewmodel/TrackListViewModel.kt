@@ -22,8 +22,8 @@ import org.singularux.music.feature.tracklist.domain.ListenPlaybackProgressUseCa
 import org.singularux.music.feature.tracklist.domain.ListenPlaybackStateUseCase
 import org.singularux.music.feature.tracklist.domain.ListenTrackListUseCase
 import org.singularux.music.feature.tracklist.domain.OverrideTimelineAndSeekToUseCase
-import org.singularux.music.feature.tracklist.domain.PauseMusicUseCase
-import org.singularux.music.feature.tracklist.domain.PlayMusicUseCase
+import org.singularux.music.feature.tracklist.domain.ActionPauseMusicUseCase
+import org.singularux.music.feature.tracklist.domain.ActionPlayMusicUseCase
 import org.singularux.music.feature.tracklist.ui.TrackListBottomBarData
 import javax.inject.Inject
 import kotlin.collections.map
@@ -38,8 +38,8 @@ class TrackListViewModel @Inject constructor(
     listenPlaybackProgressUseCase: ListenPlaybackProgressUseCase,
     listenPlaybackStateUseCase: ListenPlaybackStateUseCase,
     private val overrideTimelineAndSeekToUseCase: OverrideTimelineAndSeekToUseCase,
-    private val playMusicUseCase: PlayMusicUseCase,
-    private val pauseMusicUseCase: PauseMusicUseCase
+    private val actionPlayMusicUseCase: ActionPlayMusicUseCase,
+    private val actionPauseMusicUseCase: ActionPauseMusicUseCase
 ) : ViewModel() {
 
     val trackList = combine(
@@ -94,11 +94,11 @@ class TrackListViewModel @Inject constructor(
     val readPhoneStatePermission = getPlatformPermissionStringUseCase(MusicPermission.READ_PHONE_STATE)
 
     fun play() {
-        viewModelScope.launch { playMusicUseCase() }
+        viewModelScope.launch { actionPlayMusicUseCase() }
     }
 
     fun pause() {
-        viewModelScope.launch { pauseMusicUseCase() }
+        viewModelScope.launch { actionPauseMusicUseCase() }
     }
 
     fun playFromTrackList(index: Int) {
@@ -108,7 +108,7 @@ class TrackListViewModel @Inject constructor(
                 newTracks = trackList.value.map { it.copy() },
                 index = index
             )
-            playMusicUseCase()
+            actionPlayMusicUseCase()
         }
     }
 
@@ -119,7 +119,7 @@ class TrackListViewModel @Inject constructor(
                 newTracks = searchTrackList.value.map { it.copy() },
                 index = index
             )
-            playMusicUseCase()
+            actionPlayMusicUseCase()
         }
     }
 
@@ -132,7 +132,7 @@ class TrackListViewModel @Inject constructor(
                     .shuffled(),
                 index = 0
             )
-            playMusicUseCase()
+            actionPlayMusicUseCase()
         }
     }
 

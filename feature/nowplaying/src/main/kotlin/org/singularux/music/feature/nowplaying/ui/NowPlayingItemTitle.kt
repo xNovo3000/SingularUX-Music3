@@ -14,10 +14,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import org.singularux.music.core.ui.MusicTheme
 import org.singularux.music.feature.nowplaying.R
 
-data class NowPlayingItemTitleData(
-    val title: String,
-    val artistName: String?
-)
+sealed class NowPlayingItemTitleData {
+    data object Idle : NowPlayingItemTitleData()
+    data class Playing(
+        val title: String,
+        val artistName: String?
+    ) : NowPlayingItemTitleData()
+}
 
 @Composable
 fun NowPlayingItemTitle(
@@ -27,14 +30,20 @@ fun NowPlayingItemTitle(
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = data.title,
+            text = when (data) {
+                is NowPlayingItemTitleData.Idle -> stringResource(R.string.now_playing_item_title_no_track)
+                is NowPlayingItemTitleData.Playing -> data.title
+            },
             style = MaterialTheme.typography.headlineLarge,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = data.artistName ?: stringResource(R.string.now_playing_item_title_unknown_artist),
+            text = when (data) {
+                is NowPlayingItemTitleData.Idle -> stringResource(R.string.now_playing_item_title_no_artist)
+                is NowPlayingItemTitleData.Playing -> data.artistName ?: stringResource(R.string.now_playing_item_title_unknown_artist)
+            },
             style = MaterialTheme.typography.titleMedium,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -46,11 +55,22 @@ fun NowPlayingItemTitle(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun Preview() {
+private fun PreviewIdle() {
+    MusicTheme {
+        Surface {
+            NowPlayingItemTitle(data = NowPlayingItemTitleData.Idle)
+        }
+    }
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun PreviewPlaying() {
     MusicTheme {
         Surface {
             NowPlayingItemTitle(
-                data = NowPlayingItemTitleData(
+                data = NowPlayingItemTitleData.Playing(
                     title = "In The End",
                     artistName = "Linkin Park"
                 )

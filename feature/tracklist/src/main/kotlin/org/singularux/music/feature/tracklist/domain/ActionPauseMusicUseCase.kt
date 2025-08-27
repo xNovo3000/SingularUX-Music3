@@ -5,7 +5,7 @@ import kotlinx.coroutines.withContext
 import org.singularux.music.core.playback.MusicControllerFacade
 import javax.inject.Inject
 
-class PauseMusicUseCase @Inject constructor(
+class ActionPauseMusicUseCase @Inject constructor(
     private val musicControllerFacade: MusicControllerFacade
 ) {
 

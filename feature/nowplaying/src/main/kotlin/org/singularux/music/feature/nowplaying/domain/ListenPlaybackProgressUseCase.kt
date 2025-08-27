@@ -1,4 +1,4 @@
-package org.singularux.music.feature.tracklist.domain
+package org.singularux.music.feature.nowplaying.domain
 
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.withContext
 import org.singularux.music.core.playback.MusicControllerFacade
-import org.singularux.music.feature.tracklist.model.PlaybackProgress
+import org.singularux.music.feature.nowplaying.model.PlaybackProgress
 import javax.inject.Inject
 import kotlin.math.max
 
