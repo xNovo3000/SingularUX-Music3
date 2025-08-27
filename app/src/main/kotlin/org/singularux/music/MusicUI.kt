@@ -1,7 +1,6 @@
 package org.singularux.music
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavKey
@@ -12,8 +11,11 @@ import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
 import kotlinx.serialization.Serializable
+import org.singularux.music.core.ui.MusicPopTransitionSpec
+import org.singularux.music.core.ui.MusicPredictivePopTransitionSpec
 import org.singularux.music.core.ui.MusicSurface
 import org.singularux.music.core.ui.MusicTheme
+import org.singularux.music.core.ui.MusicTransitionSpec
 import org.singularux.music.feature.nowplaying.ui.NowPlayingRoute
 import org.singularux.music.feature.tracklist.ui.TrackListRoute
 
@@ -48,7 +50,10 @@ fun MusicUI() {
                             onGoBack = { backStack.removeLastOrNull() }
                         )
                     }
-                }
+                },
+                transitionSpec = MusicTransitionSpec,
+                popTransitionSpec = MusicPopTransitionSpec,
+                predictivePopTransitionSpec = MusicPredictivePopTransitionSpec
             )
         }
     }
