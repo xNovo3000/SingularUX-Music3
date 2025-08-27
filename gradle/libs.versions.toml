@@ -1,6 +1,7 @@
 [versions]
 # Plugins
 agp = "8.12.1"
+androidx-baselineprofile = "1.4.0"
 kotlin = "2.2.10"
 ksp = "2.2.10-2.0.2"
 hilt = "2.57.1"
@@ -8,6 +9,7 @@ hilt = "2.57.1"
 androidx-core = "1.17.0"
 androidx-core-splashscreen = "1.0.1"
 androidx-activity = "1.10.1"
+androidx-profileinstaller = "1.4.1"
 coil3 = "3.3.0"
 compose-bom = "2025.08.00"
 compose-material3 = "1.5.0-alpha02"
@@ -18,12 +20,16 @@ kotlinx-serialization = "1.9.0"
 lifecycle = "2.10.0-alpha02"
 media3 = "1.8.0"
 navigation3 = "1.0.0-alpha07"
+test-junit = "1.3.0"
+test-espresso = "3.7.0"
+test-uiautomator = "2.3.0"
 
 [libraries]
 # AndroidX
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidx-core-splashscreen" }
 androidx-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity" }
+androidx-profileinstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "androidx-profileinstaller" }
 # Coil3
 coil3 = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil3" }
 # Hilt
@@ -56,10 +62,17 @@ media3-session = { group = "androidx.media3", name = "media3-session", version.r
 # Navigation 3
 navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "navigation3" }
 navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "navigation3" }
+# Test
+test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "test-espresso" }
+test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "test-junit" }
+test-macrobenchmark = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "androidx-baselineprofile" }
+test-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "test-uiautomator" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+android-test = { id = "com.android.test", version.ref = "agp" }
+androidx-baselineprofile = { id = "androidx.baselineprofile", version.ref = "androidx-baselineprofile" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

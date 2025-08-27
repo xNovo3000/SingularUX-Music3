@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.androidx.baselineprofile)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
@@ -48,6 +49,9 @@ dependencies {
     // Project
     api(project(":feature:nowplaying"))
     api(project(":feature:tracklist"))
+    // Baseline
+    implementation(libs.androidx.profileinstaller)
+    baselineProfile(project(":baseline"))
     // AndroidX
     implementation(libs.androidx.core)
     implementation(libs.androidx.core.splashscreen)
