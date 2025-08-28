@@ -18,7 +18,7 @@ android {
         applicationId = "org.singularux.music"
         minSdk = 31
         targetSdk = 36
-        versionCode = 1
+        versionCode = 2
         versionName = "25.08.27"
     }
     buildTypes {
