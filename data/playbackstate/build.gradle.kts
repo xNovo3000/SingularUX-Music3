@@ -61,8 +61,7 @@ dependencies {
 
 protobuf {
     protoc {
-        // TODO: Fix this hardcoded version
-        artifact = "com.google.protobuf:protoc:4.32.0"
+        artifact = libs.protoc.get().toString()
     }
     generateProtoTasks {
         all().configureEach {

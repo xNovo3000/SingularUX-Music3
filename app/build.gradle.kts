@@ -47,6 +47,7 @@ android {
 
 dependencies {
     // Project
+    api(project(":data:playbackstate"))
     api(project(":feature:nowplaying"))
     api(project(":feature:tracklist"))
     // Baseline
