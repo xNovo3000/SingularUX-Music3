@@ -6,7 +6,9 @@ import android.content.Intent
 import android.telephony.TelephonyManager
 import androidx.media3.session.MediaSession
 
-class PauseWhenCallingBroadcastReceiver(private val mediaSession: MediaSession) : BroadcastReceiver() {
+class PauseWhenCallingBroadcastReceiver(
+    private val mediaSession: MediaSession
+) : BroadcastReceiver() {
 
     private var wasPlayingWhenInterrupted = false
 

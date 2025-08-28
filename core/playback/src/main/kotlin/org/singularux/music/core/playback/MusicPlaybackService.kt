@@ -1,5 +1,6 @@
 package org.singularux.music.core.playback
 
+import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentFilter
 import android.telephony.TelephonyManager
@@ -12,14 +13,26 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MusicPlaybackService : MediaSessionService() {
 
+    companion object {
+        const val INTENT_ORIGIN = "system_ui_notification"
+    }
+
     private var mediaSession: MediaSession? = null
     private var pauseWhenCallingBroadcastReceiver: PauseWhenCallingBroadcastReceiver? = null
 
     override fun onCreate() {
         super.onCreate()
+        // Create intent to launch main activity when the user clicks the notification
+        val pendingIntent = packageManager.getLaunchIntentForPackage(packageName)!!.let {
+            it.putExtra("origin", INTENT_ORIGIN)
+            PendingIntent.getActivity(this, 0, it,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        }
         // Create current session
         val player = ExoPlayer.Builder(this).build()
-        mediaSession = MediaSession.Builder(this, player).build()
+        mediaSession = MediaSession.Builder(this, player)
+            .setSessionActivity(pendingIntent)
+            .build()
         // Listen for calls
         val phoneCallIntentFilter = IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED)
         pauseWhenCallingBroadcastReceiver = PauseWhenCallingBroadcastReceiver(mediaSession = mediaSession!!)
