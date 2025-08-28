@@ -42,8 +42,8 @@ class DataPlaybackStateModule {
     @Singleton
     fun providesPositionDataStore(@ApplicationContext context: Context): DataStore<Position> {
         return DataStoreFactory.create(
-            serializer = PositionSerializer(),
-            produceFile = { context.dataStoreFile(fileName = "position.proto") }
+            serializer = PositionSerializer,
+            produceFile = { context.dataStoreFile(fileName = "position.json") }
         )
     }
 

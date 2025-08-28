@@ -1,13 +1,12 @@
-import com.google.protobuf.gradle.id
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.room)
-    alias(libs.plugins.protobuf)
 }
 
 android {
@@ -42,8 +41,6 @@ android {
 }
 
 dependencies {
-    // Project
-    api(project(":core:permission"))
     // AndroidX
     implementation(libs.androidx.core)
     // DataStore
@@ -51,28 +48,9 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    // KotlinX
+    implementation(libs.kotlinx.serialization.json)
     // Room
     implementation(libs.room.android)
     ksp(libs.room.compiler)
-    // Protobuf
-    implementation(libs.protobuf.java)
-    implementation(libs.protobuf.kotlin)
-}
-
-protobuf {
-    protoc {
-        artifact = libs.protoc.get().toString()
-    }
-    generateProtoTasks {
-        all().configureEach {
-            builtins {
-                id("java") {
-                    option("lite")
-                }
-                id("kotlin") {
-                    option("lite")
-                }
-            }
-        }
-    }
 }
