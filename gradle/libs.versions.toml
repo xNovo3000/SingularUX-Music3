@@ -5,6 +5,7 @@ androidx-baselineprofile = "1.4.0"
 kotlin = "2.2.10"
 ksp = "2.2.10-2.0.2"
 hilt = "2.57.1"
+room = "2.7.2"
 # Libraries
 androidx-core = "1.17.0"
 androidx-core-splashscreen = "1.0.1"
@@ -62,6 +63,9 @@ media3-session = { group = "androidx.media3", name = "media3-session", version.r
 # Navigation 3
 navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "navigation3" }
 navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "navigation3" }
+# Room
+room-android = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 # Test
 test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "test-espresso" }
 test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "test-junit" }
@@ -78,3 +82,4 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+room = { id = "androidx.room", version.ref = "room" }
