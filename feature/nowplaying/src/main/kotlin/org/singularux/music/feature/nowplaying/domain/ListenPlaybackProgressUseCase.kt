@@ -15,7 +15,6 @@ import org.singularux.music.core.playback.MusicControllerFacade
 import org.singularux.music.feature.nowplaying.model.PlaybackProgress
 import javax.inject.Inject
 import kotlin.math.max
-import kotlin.math.min
 
 class ListenPlaybackProgressUseCase @Inject constructor(
     private val musicControllerFacade: MusicControllerFacade
@@ -30,39 +29,40 @@ class ListenPlaybackProgressUseCase @Inject constructor(
 
     operator fun invoke(): Flow<PlaybackProgress> = channelFlow {
         val mediaController = musicControllerFacade.mediaControllerDeferred.await()
+        val updateFunction: (Long, Long) -> Unit = { current: Long, total: Long ->
+            val playbackProgress = PlaybackProgress(
+                progress = (current.toDouble() / total.toDouble()).toFloat()
+            )
+            when (playbackProgress.progress) {
+                in 0.0..1.0 -> trySend(element = playbackProgress)
+                    .onSuccess { Log.v(TAG, "Sent $playbackProgress") }
+                    .onFailure { Log.e(TAG, "Cannot send progress", it) }
+                else -> Log.v(TAG, "Received invalid progress $playbackProgress")
+            }
+        }
         val listener = object : Player.Listener {
             override fun onPositionDiscontinuity(
                 oldPosition: Player.PositionInfo,
                 newPosition: Player.PositionInfo,
                 reason: Int
             ) {
-                val playbackProgress = PlaybackProgress(
-                    progress = (newPosition.contentPositionMs.toDouble() / cachedContentDurationMs.toDouble()).toFloat()
-                )
-                trySend(element = playbackProgress)
-                    .onSuccess { Log.v(TAG, "Sent $playbackProgress") }
-                    .onFailure { Log.e(TAG, "Cannot send progress", it) }
+                updateFunction(newPosition.contentPositionMs, cachedContentDurationMs)
             }
         }
-        val updateJob = launch {
+        val scheduledJob = launch {
             while (true) {
-                val (current, total) = withContext(Dispatchers.Main) {
-                    Pair(
-                        first = mediaController.currentPosition,
-                        second = max(mediaController.contentDuration, 1)
+                val (isLoading, current, total) = withContext(Dispatchers.Main) {
+                    Triple(
+                        first = mediaController.isLoading,
+                        second = mediaController.currentPosition,
+                        third = max(mediaController.contentDuration, 1)
                     )
                 }
-                val playbackProgress = PlaybackProgress(
-                    progress = (current.toDouble() / total.toDouble()).toFloat()
-                )
-                val isLoading = withContext(Dispatchers.Main) { mediaController.isLoading }
-                if (playbackProgress.progress in 0.0..1.0 && !isLoading) {
+                if (!isLoading) {
                     cachedContentDurationMs = total
-                    trySend(element = playbackProgress)
-                        .onSuccess { Log.v(TAG, "Sent $playbackProgress") }
-                        .onFailure { Log.e(TAG, "Cannot send progress", it) }
+                    updateFunction(current, total)
                 } else {
-                    Log.v(TAG, "Received invalid progress $playbackProgress")
+                    Log.v(TAG, "Cannot update progress because it is buffering")
                 }
                 delay(UPDATE_DELAY_MS)
             }
@@ -70,7 +70,7 @@ class ListenPlaybackProgressUseCase @Inject constructor(
         mediaController.addListener(listener)
         awaitClose {
             musicControllerFacade.removeListener(listener)
-            updateJob.cancel()
+            scheduledJob.cancel()
         }
     }
 
