@@ -150,7 +150,7 @@ class TrackListViewModel @Inject constructor(
     fun addToQueueFromSearchTrackList(index: Int) {
         viewModelScope.launch {
             timelineAddToQueueUseCase(
-                tagPrefix = "tracks",
+                tagPrefix = "search",
                 track = searchTrackList.value[index].copy()
             )
         }
