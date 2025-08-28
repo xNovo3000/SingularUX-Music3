@@ -12,12 +12,12 @@ import org.singularux.music.core.playback.MusicControllerFacade
 import org.singularux.music.feature.tracklist.ui.TrackItemData
 import javax.inject.Inject
 
-class OverrideTimelineAndSeekToUseCase @Inject constructor(
+class TimelineOverrideUseCase @Inject constructor(
     private val musicControllerFacade: MusicControllerFacade
 ) {
 
     companion object {
-        private const val TAG = "OverrideTimelineAndSeekToUseCase"
+        private const val TAG = "TimelineOverrideUseCase"
     }
 
     suspend operator fun invoke(

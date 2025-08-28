@@ -68,7 +68,7 @@ fun TrackListRoute(
                     when (action) {
                         TrackItemAction.PLAY -> viewModel.playFromSearchTrackList(index)
                         TrackItemAction.ADD_TO_QUEUE -> {
-                            viewModel.addToQueue(index)
+                            viewModel.addToQueueFromSearchTrackList(index)
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar(
                                     message = snackbarAddedToQueueFeedback
@@ -151,7 +151,7 @@ fun TrackListRoute(
                     when (action) {
                         TrackItemAction.PLAY -> viewModel.playFromTrackList(index)
                         TrackItemAction.ADD_TO_QUEUE -> {
-                            viewModel.addToQueue(index)
+                            viewModel.addToQueueFromTrackList(index)
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar(
                                     message = snackbarAddedToQueueFeedback
