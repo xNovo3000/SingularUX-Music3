@@ -2,15 +2,60 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "fc39171b572f6c0303c1c84b59536089",
+    "identityHash": "1398a9476a38f657ffcc5da423f3a819",
     "entities": [
       {
         "tableName": "SavedMediaItemEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `itemId` INTEGER NOT NULL, `itemUri` TEXT, `title` TEXT NOT NULL, `artist` TEXT, `duration` INTEGER NOT NULL, `artworkUri` TEXT, `playingFrom` TEXT NOT NULL, `addedByUser` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemId",
+            "columnName": "itemId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemUri",
+            "columnName": "itemUri",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "artist",
+            "columnName": "artist",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "duration",
+            "columnName": "duration",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "artworkUri",
+            "columnName": "artworkUri",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "playingFrom",
+            "columnName": "playingFrom",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "addedByUser",
+            "columnName": "addedByUser",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -25,7 +70,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fc39171b572f6c0303c1c84b59536089')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1398a9476a38f657ffcc5da423f3a819')"
     ]
   }
 }
