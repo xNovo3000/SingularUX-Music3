@@ -16,7 +16,7 @@ android {
     buildToolsVersion = "36.0.0"
     defaultConfig {
         applicationId = "org.singularux.music"
-        minSdk = 31
+        minSdk = 30
         targetSdk = 36
         versionCode = 2
         versionName = "25.08.27"
