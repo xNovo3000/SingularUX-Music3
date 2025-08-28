@@ -28,11 +28,15 @@ class MusicActivity : ComponentActivity() {
         setContent { MusicUI() }
     }
 
-    override fun onDestroy() {
+    override fun onStop() {
+        super.onStop()
         // Save current timeline
         val saveStateWorkRequest = OneTimeWorkRequestBuilder<SavePlaybackStateWorker>()
             .build()
         workManager.enqueue(saveStateWorkRequest)
+    }
+
+    override fun onDestroy() {
         // Release the MediaController only when the activity is being killed
         if (isFinishing) musicControllerFacade.release()
         super.onDestroy()

@@ -2,6 +2,7 @@ package org.singularux.music.feature.saverestoreplaybackstate
 
 import android.content.Context
 import android.provider.MediaStore
+import android.util.Log
 import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.datastore.core.DataStore
@@ -15,7 +16,9 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.last
+import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.withContext
 import org.singularux.music.core.playback.MusicControllerFacade
 import org.singularux.music.data.playbackstate.position.Position
@@ -32,13 +35,19 @@ class RestorePlaybackStateWorker @AssistedInject constructor(
     params = params
 ) {
 
+    companion object {
+        private const val TAG = "RestorePlaybackStateWorker"
+    }
+
     override suspend fun doWork(): Result {
         // Create controller
+        Log.d(TAG, "Retrieving MediaController")
         val musicControllerFacade = MusicControllerFacade(
             context = applicationContext,
             coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
         )
         val mediaController = musicControllerFacade.mediaControllerDeferred.await()
+        Log.d(TAG, "Retrieved MediaController")
         // Retrieve data
         val mediaItemList = savedMediaItemRepository.getAll().map {
             val trackItemUri = "${MediaStore.Audio.Media.EXTERNAL_CONTENT_URI}/${it.itemId}".toUri()
@@ -57,8 +66,14 @@ class RestorePlaybackStateWorker @AssistedInject constructor(
                 .setMediaMetadata(mediaMetadata)
                 .build()
         }
-        val position = positionDataStore.data.last()
+        Log.d(TAG, "Retrieved mediaItemList")
+        val position = positionDataStore.data.firstOrNull() ?: Position(
+            index = 0,
+            positionMs = 0
+        )
+        Log.d(TAG, "Retrieved position")
         // Restore only if the list is not empty
+        Log.d(TAG, "Settingg data")
         if (mediaItemList.isNotEmpty()) {
             withContext(Dispatchers.Main) {
                 mediaController.setMediaItems(mediaItemList)
@@ -66,7 +81,8 @@ class RestorePlaybackStateWorker @AssistedInject constructor(
             }
         }
         // Release controller and return success to avoid retry
-        mediaController.release()
+        Log.d(TAG, "Releasing MediaController")
+        withContext(Dispatchers.Main) { mediaController.release() }
         return Result.success()
     }
 

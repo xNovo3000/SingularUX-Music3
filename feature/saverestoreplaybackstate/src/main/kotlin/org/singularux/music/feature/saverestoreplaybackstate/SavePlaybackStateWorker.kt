@@ -67,7 +67,7 @@ class SavePlaybackStateWorker @AssistedInject constructor(
             positionDataStore.updateData { position }
         }
         // Release controller and return success to avoid retry
-        mediaController.release()
+        withContext(Dispatchers.Main) { mediaController.release() }
         return Result.success()
     }
 

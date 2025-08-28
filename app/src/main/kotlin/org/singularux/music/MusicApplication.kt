@@ -12,7 +12,6 @@ import coil3.memory.MemoryCache
 import coil3.request.CachePolicy
 import dagger.hilt.android.HiltAndroidApp
 import org.singularux.music.feature.saverestoreplaybackstate.RestorePlaybackStateWorker
-import org.singularux.music.feature.saverestoreplaybackstate.SavePlaybackStateWorker
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -23,11 +22,15 @@ class MusicApplication : Application(), SingletonImageLoader.Factory, Configurat
     }
 
     @Inject lateinit var hiltWorkerFactory: HiltWorkerFactory
+    @Inject lateinit var workManager: WorkManager
 
-    override val workManagerConfiguration: Configuration =
-        Configuration.Builder()
-            .setWorkerFactory(hiltWorkerFactory)
+    override fun onCreate() {
+        super.onCreate()
+        // Restore timeline when the app starts
+        val restoreStateWorkRequest = OneTimeWorkRequestBuilder<RestorePlaybackStateWorker>()
             .build()
+        workManager.enqueue(restoreStateWorkRequest)
+    }
 
     override fun newImageLoader(context: PlatformContext): ImageLoader {
         return ImageLoader.Builder(context = context)
@@ -40,5 +43,11 @@ class MusicApplication : Application(), SingletonImageLoader.Factory, Configurat
             }
             .build()
     }
+
+    // Do not remove get() otherwise @Inject does not work!
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setWorkerFactory(hiltWorkerFactory)
+            .build()
 
 }
