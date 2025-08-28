@@ -20,7 +20,7 @@ import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import kotlinx.coroutines.launch
 import org.singularux.music.core.ui.MusicTheme
 import org.singularux.music.feature.tracklist.R
 import kotlin.time.Duration
@@ -55,14 +56,15 @@ fun TrackItem(
     onAction: (action: TrackItemAction) -> Unit
 ) {
     val state = rememberSwipeToDismissBoxState()
-    LaunchedEffect(state.settledValue) {
-        onAction(TrackItemAction.ADD_TO_QUEUE)
-        state.reset()
-    }
+    val coroutineScope = rememberCoroutineScope()
     SwipeToDismissBox(
         modifier = modifier,
         state = state,
-        backgroundContent = { TrackItemBackground() }
+        backgroundContent = { TrackItemBackground() },
+        onDismiss = {
+            onAction(TrackItemAction.ADD_TO_QUEUE)
+            coroutineScope.launch { state.reset() }
+        }
     ) {
         TrackItemContent(
             colors = colors,
