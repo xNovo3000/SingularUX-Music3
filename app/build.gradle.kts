@@ -47,8 +47,8 @@ android {
 
 dependencies {
     // Project
-    api(project(":data:playbackstate"))
     api(project(":feature:nowplaying"))
+    api(project(":feature:saverestoreplaybackstate"))
     api(project(":feature:tracklist"))
     // Baseline
     implementation(libs.androidx.profileinstaller)

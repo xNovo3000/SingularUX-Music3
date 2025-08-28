@@ -41,6 +41,8 @@ dependencies {
     api(project(":data:playbackstate"))
     // AndroidX
     implementation(libs.androidx.core)
+    // DataStore
+    implementation(libs.datastore)
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)

@@ -13,6 +13,7 @@ import dagger.hilt.components.SingletonComponent
 import org.singularux.music.data.playbackstate.position.Position
 import org.singularux.music.data.playbackstate.position.PositionSerializer
 import org.singularux.music.data.playbackstate.timeline.TimelineDatabase
+import org.singularux.music.data.playbackstate.timeline.repository.SavedMediaItemRepository
 import javax.inject.Singleton
 
 @Module
@@ -27,6 +28,14 @@ class DataPlaybackStateModule {
             klass = TimelineDatabase::class.java,
             name = "timeline.sql"
         ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun providesSavedMediaItemRepository(
+        timelineDatabase: TimelineDatabase
+    ): SavedMediaItemRepository {
+        return timelineDatabase.getSavedMediaItemRepository()
     }
 
     @Provides
