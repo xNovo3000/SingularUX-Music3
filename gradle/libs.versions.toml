@@ -17,7 +17,7 @@ compose-material3 = "1.5.0-alpha02"
 compose-accompanist = "0.37.3"
 datastore = "1.1.7"
 hilt-navigation = "1.2.0"
-hilt-work = "1.2.0"
+hilt-ext = "1.2.0"
 kotlinx-coroutines = "1.10.2"
 kotlinx-serialization = "1.9.0"
 lifecycle = "2.10.0-alpha02"
@@ -43,8 +43,8 @@ datastore = { group = "androidx.datastore", name = "datastore", version.ref = "d
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation" }
-hilt-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hilt-work" }
-hilt-work-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt-work" }
+hilt-ext-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hilt-ext" }
+hilt-ext-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt-ext" }
 # KotlinX
 kotlinx-coroutines-guava = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-guava", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinx-serialization" }

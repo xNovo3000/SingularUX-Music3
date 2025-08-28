@@ -46,8 +46,8 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    implementation(libs.hilt.work)
-    ksp(libs.hilt.work.compiler)
+    implementation(libs.hilt.ext.work)
+    ksp(libs.hilt.ext.compiler)
     // Media 3
     implementation(libs.media3.session)
     // Work

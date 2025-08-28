@@ -3,12 +3,16 @@ package org.singularux.music
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import coil3.ImageLoader
 import coil3.PlatformContext
 import coil3.SingletonImageLoader
 import coil3.memory.MemoryCache
 import coil3.request.CachePolicy
 import dagger.hilt.android.HiltAndroidApp
+import org.singularux.music.feature.saverestoreplaybackstate.RestorePlaybackStateWorker
+import org.singularux.music.feature.saverestoreplaybackstate.SavePlaybackStateWorker
 import javax.inject.Inject
 
 @HiltAndroidApp
