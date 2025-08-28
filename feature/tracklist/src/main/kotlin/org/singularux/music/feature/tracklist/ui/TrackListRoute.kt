@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.rememberSearchBarState
@@ -67,7 +68,7 @@ fun TrackListRoute(
                     when (action) {
                         TrackItemAction.PLAY -> viewModel.playFromSearchTrackList(index)
                         TrackItemAction.ADD_TO_QUEUE -> {
-                            viewModel.addToQueue(index)
+                            viewModel.addToQueueFromSearchTrackList(index)
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar(
                                     message = snackbarAddedToQueueFeedback
@@ -101,6 +102,9 @@ fun TrackListRoute(
                     }
                 }
             )
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
         }
     ) { innerPadding ->
         // Permission state holders
@@ -147,7 +151,7 @@ fun TrackListRoute(
                     when (action) {
                         TrackItemAction.PLAY -> viewModel.playFromTrackList(index)
                         TrackItemAction.ADD_TO_QUEUE -> {
-                            viewModel.addToQueue(index)
+                            viewModel.addToQueueFromTrackList(index)
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar(
                                     message = snackbarAddedToQueueFeedback

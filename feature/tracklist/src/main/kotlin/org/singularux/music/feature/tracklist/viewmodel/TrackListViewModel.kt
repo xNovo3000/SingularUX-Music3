@@ -21,9 +21,10 @@ import org.singularux.music.feature.tracklist.domain.ListenPlaybackMetadataUseCa
 import org.singularux.music.feature.tracklist.domain.ListenPlaybackProgressUseCase
 import org.singularux.music.feature.tracklist.domain.ListenPlaybackStateUseCase
 import org.singularux.music.feature.tracklist.domain.ListenTrackListUseCase
-import org.singularux.music.feature.tracklist.domain.OverrideTimelineAndSeekToUseCase
+import org.singularux.music.feature.tracklist.domain.TimelineOverrideUseCase
 import org.singularux.music.feature.tracklist.domain.ActionPauseMusicUseCase
 import org.singularux.music.feature.tracklist.domain.ActionPlayMusicUseCase
+import org.singularux.music.feature.tracklist.domain.TimelineAddToQueueUseCase
 import org.singularux.music.feature.tracklist.ui.TrackListBottomBarData
 import javax.inject.Inject
 import kotlin.collections.map
@@ -37,7 +38,8 @@ class TrackListViewModel @Inject constructor(
     listenPlaybackMetadataUseCase: ListenPlaybackMetadataUseCase,
     listenPlaybackProgressUseCase: ListenPlaybackProgressUseCase,
     listenPlaybackStateUseCase: ListenPlaybackStateUseCase,
-    private val overrideTimelineAndSeekToUseCase: OverrideTimelineAndSeekToUseCase,
+    private val timelineOverrideUseCase: TimelineOverrideUseCase,
+    private val timelineAddToQueueUseCase: TimelineAddToQueueUseCase,
     private val actionPlayMusicUseCase: ActionPlayMusicUseCase,
     private val actionPauseMusicUseCase: ActionPauseMusicUseCase
 ) : ViewModel() {
@@ -103,7 +105,7 @@ class TrackListViewModel @Inject constructor(
 
     fun playFromTrackList(index: Int) {
         viewModelScope.launch {
-            overrideTimelineAndSeekToUseCase(
+            timelineOverrideUseCase(
                 tagPrefix = "tracks",
                 newTracks = trackList.value.map { it.copy() },
                 index = index
@@ -114,7 +116,7 @@ class TrackListViewModel @Inject constructor(
 
     fun playFromSearchTrackList(index: Int) {
         viewModelScope.launch {
-            overrideTimelineAndSeekToUseCase(
+            timelineOverrideUseCase(
                 tagPrefix = "search",
                 newTracks = searchTrackList.value.map { it.copy() },
                 index = index
@@ -125,7 +127,7 @@ class TrackListViewModel @Inject constructor(
 
     fun playShuffled() {
         viewModelScope.launch {
-            overrideTimelineAndSeekToUseCase(
+            timelineOverrideUseCase(
                 tagPrefix = "tracks",
                 newTracks = trackList.value
                     .map { it.copy() }
@@ -136,8 +138,22 @@ class TrackListViewModel @Inject constructor(
         }
     }
 
-    fun addToQueue(index: Int) {
-        // TODO: Implement
+    fun addToQueueFromTrackList(index: Int) {
+        viewModelScope.launch {
+            timelineAddToQueueUseCase(
+                tagPrefix = "tracks",
+                track = trackList.value[index].copy()
+            )
+        }
+    }
+
+    fun addToQueueFromSearchTrackList(index: Int) {
+        viewModelScope.launch {
+            timelineAddToQueueUseCase(
+                tagPrefix = "search",
+                track = searchTrackList.value[index].copy()
+            )
+        }
     }
 
 }
