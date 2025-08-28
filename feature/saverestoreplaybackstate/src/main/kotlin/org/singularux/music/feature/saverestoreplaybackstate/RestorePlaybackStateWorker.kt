@@ -11,7 +11,7 @@ import org.singularux.music.data.playbackstate.position.Position
 import org.singularux.music.data.playbackstate.timeline.repository.SavedMediaItemRepository
 
 @HiltWorker
-class SavePlaybackStateWorker @AssistedInject constructor(
+class RestorePlaybackStateWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted params: WorkerParameters,
     savedMediaItemRepository: SavedMediaItemRepository,
