@@ -25,7 +25,6 @@ class ListenPlaybackProgressUseCase @Inject constructor(
         private const val UPDATE_DELAY_MS = 300L
     }
 
-    private var cachedContentDurationMs: Long = 1
 
     operator fun invoke(): Flow<PlaybackProgress> = channelFlow {
         val mediaController = musicControllerFacade.mediaControllerDeferred.await()
@@ -41,6 +40,7 @@ class ListenPlaybackProgressUseCase @Inject constructor(
             }
         }
         val listener = object : Player.Listener {
+            var cachedContentDurationMs: Long = 1
             override fun onPositionDiscontinuity(
                 oldPosition: Player.PositionInfo,
                 newPosition: Player.PositionInfo,
@@ -59,7 +59,7 @@ class ListenPlaybackProgressUseCase @Inject constructor(
                     )
                 }
                 if (!isLoading) {
-                    cachedContentDurationMs = total
+                    listener.cachedContentDurationMs = total
                     updateFunction(current, total)
                 } else {
                     Log.v(TAG, "Cannot update progress because it is buffering")
