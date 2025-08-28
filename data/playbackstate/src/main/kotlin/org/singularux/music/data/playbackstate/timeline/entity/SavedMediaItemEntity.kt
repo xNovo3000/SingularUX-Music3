@@ -10,7 +10,6 @@ data class SavedMediaItemEntity(
     @PrimaryKey(autoGenerate = true) val id: Long,
     // MediaItem
     val itemId: Long,
-    val itemUri: Uri?,
     // MediaMetadata
     val title: String,
     val artist: String?,

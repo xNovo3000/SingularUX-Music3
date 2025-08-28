@@ -48,6 +48,8 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.work)
     ksp(libs.hilt.work.compiler)
+    // Media 3
+    implementation(libs.media3.session)
     // Work
     implementation(libs.work.runtime)
 }
