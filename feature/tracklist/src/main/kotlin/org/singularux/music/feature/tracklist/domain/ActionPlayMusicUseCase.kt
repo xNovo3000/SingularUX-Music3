@@ -2,7 +2,7 @@ package org.singularux.music.feature.tracklist.domain
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.singularux.music.core.playback.MusicControllerFacade
+import org.singularux.music.feature.playback.foreground.MusicControllerFacade
 import javax.inject.Inject
 
 class ActionPlayMusicUseCase @Inject constructor(

@@ -1,6 +1,6 @@
 [versions]
 # Plugins
-agp = "8.12.1"
+agp = "8.12.2"
 androidx-baselineprofile = "1.4.0"
 kotlin = "2.2.10"
 ksp = "2.2.10-2.0.2"
@@ -12,16 +12,18 @@ androidx-core-splashscreen = "1.0.1"
 androidx-activity = "1.10.1"
 androidx-profileinstaller = "1.4.1"
 coil3 = "3.3.0"
-compose-bom = "2025.08.00"
-compose-material3 = "1.5.0-alpha02"
+compose-bom = "2025.08.01"
+compose-material3 = "1.5.0-alpha03"
 compose-accompanist = "0.37.3"
 datastore = "1.1.7"
 hilt-navigation = "1.2.0"
 hilt-ext = "1.2.0"
 kotlinx-coroutines = "1.10.2"
 kotlinx-serialization = "1.9.0"
+#noinspection GradleDependency See issue #15
 lifecycle = "2.10.0-alpha02"
 media3 = "1.8.0"
+#noinspection GradleDependency See issue #15
 navigation3 = "1.0.0-alpha07"
 work = "2.10.3"
 # Test

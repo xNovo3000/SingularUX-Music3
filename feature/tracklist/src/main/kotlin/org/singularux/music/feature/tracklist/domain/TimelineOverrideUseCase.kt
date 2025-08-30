@@ -8,7 +8,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.singularux.music.core.playback.MusicControllerFacade
+import org.singularux.music.feature.playback.foreground.MusicControllerFacade
 import org.singularux.music.feature.tracklist.ui.TrackItemData
 import javax.inject.Inject
 

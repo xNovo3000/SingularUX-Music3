@@ -13,13 +13,13 @@ import org.singularux.music.feature.nowplaying.domain.ActionPlayMusicUseCase
 import org.singularux.music.feature.nowplaying.domain.ActionSeekToMusicUseCase
 import org.singularux.music.feature.nowplaying.domain.ActionSkipNextMusicUseCase
 import org.singularux.music.feature.nowplaying.domain.ActionSkipPrevMusicUseCase
-import org.singularux.music.feature.nowplaying.domain.ListenPlaybackMetadataUseCase
-import org.singularux.music.feature.nowplaying.domain.ListenPlaybackProgressUseCase
-import org.singularux.music.feature.nowplaying.domain.ListenPlaybackStateUseCase
 import org.singularux.music.feature.nowplaying.ui.NowPlayingItemArtworkData
 import org.singularux.music.feature.nowplaying.ui.NowPlayingItemButtonsData
 import org.singularux.music.feature.nowplaying.ui.NowPlayingItemScrubberData
 import org.singularux.music.feature.nowplaying.ui.NowPlayingItemTitleData
+import org.singularux.music.feature.playback.domain.ListenPlaybackMetadataUseCase
+import org.singularux.music.feature.playback.domain.ListenPlaybackProgressUseCase
+import org.singularux.music.feature.playback.domain.ListenPlaybackStateUseCase
 import javax.inject.Inject
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds

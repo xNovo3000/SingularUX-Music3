@@ -15,13 +15,13 @@ import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
 import kotlinx.serialization.Serializable
-import org.singularux.music.core.playback.MusicPlaybackService
 import org.singularux.music.core.ui.MusicPopTransitionSpec
 import org.singularux.music.core.ui.MusicPredictivePopTransitionSpec
 import org.singularux.music.core.ui.MusicSurface
 import org.singularux.music.core.ui.MusicTheme
 import org.singularux.music.core.ui.MusicTransitionSpec
 import org.singularux.music.feature.nowplaying.ui.NowPlayingRoute
+import org.singularux.music.feature.playback.foreground.MusicPlaybackService
 import org.singularux.music.feature.tracklist.ui.TrackListRoute
 
 sealed class MusicRoute : NavKey {
