@@ -8,7 +8,12 @@ import androidx.core.content.ContextCompat
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import dagger.hilt.android.AndroidEntryPoint
+import org.singularux.music.feature.playback.work.RestorePlaybackDataWorker
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MusicPlaybackService : MediaSessionService() {
@@ -19,6 +24,8 @@ class MusicPlaybackService : MediaSessionService() {
 
     private var mediaSession: MediaSession? = null
     private var pauseWhenCallingBroadcastReceiver: PauseWhenCallingBroadcastReceiver? = null
+
+    @Inject lateinit var workManager: WorkManager
 
     override fun onCreate() {
         super.onCreate()
@@ -38,6 +45,14 @@ class MusicPlaybackService : MediaSessionService() {
         pauseWhenCallingBroadcastReceiver = PauseWhenCallingBroadcastReceiver(mediaSession = mediaSession!!)
         ContextCompat.registerReceiver(this, pauseWhenCallingBroadcastReceiver,
             phoneCallIntentFilter, ContextCompat.RECEIVER_EXPORTED)
+        // Restore playback data
+        workManager.enqueueUniqueWork(
+            uniqueWorkName = RestorePlaybackDataWorker.TAG,
+            existingWorkPolicy = ExistingWorkPolicy.REPLACE,
+            request = OneTimeWorkRequestBuilder<RestorePlaybackDataWorker>()
+                .addTag(RestorePlaybackDataWorker.TAG)
+                .build()
+        )
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {
