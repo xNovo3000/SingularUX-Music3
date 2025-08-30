@@ -37,16 +37,22 @@ android {
 }
 
 dependencies {
+    // Project
+    api(project(":data:playbackstate"))
     // AndroidX
     implementation(libs.androidx.core)
-    // Coil3
-    implementation(libs.coil3)
+    // DataStore
+    implementation(libs.datastore)
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    implementation(libs.hilt.ext.work)
+    ksp(libs.hilt.ext.compiler)
     // KotlinX
     implementation(libs.kotlinx.coroutines.guava)
     // Media 3
     implementation(libs.media3.exoplayer)
     implementation(libs.media3.session)
+    // Work
+    implementation(libs.work.runtime)
 }

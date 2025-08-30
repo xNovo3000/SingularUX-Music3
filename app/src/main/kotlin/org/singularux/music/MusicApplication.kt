@@ -11,7 +11,7 @@ import coil3.SingletonImageLoader
 import coil3.memory.MemoryCache
 import coil3.request.CachePolicy
 import dagger.hilt.android.HiltAndroidApp
-import org.singularux.music.feature.saverestoreplaybackstate.RestorePlaybackStateWorker
+import org.singularux.music.feature.saverestoreplaybackstate.worker.RestorePlaybackStateWorker
 import javax.inject.Inject
 
 @HiltAndroidApp
