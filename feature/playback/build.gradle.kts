@@ -9,11 +9,11 @@ plugins {
 }
 
 android {
-    namespace = "org.singularux.music.feature.tracklist"
+    namespace = "org.singularux.music.feature.playback"
     compileSdk = 36
     buildToolsVersion = "36.0.0"
     defaultConfig {
-        minSdk = 30
+        minSdk = 26
         consumerProguardFiles("consumer-rules.pro")
     }
     buildTypes {
@@ -24,9 +24,6 @@ android {
                 "proguard-rules.pro"
             )
         }
-    }
-    buildFeatures {
-        compose = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -40,35 +37,16 @@ android {
 }
 
 dependencies {
-    // Project
-    api(project(":core:permission"))
-    api(project(":core:ui"))
-    api(project(":data:library"))
-    api(project(":feature:playback"))
     // AndroidX
     implementation(libs.androidx.core)
-    implementation(libs.androidx.core.splashscreen)
     // Coil3
     implementation(libs.coil3)
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    // Jetpack Compose
-    implementation(platform(libs.compose.bom))
-    implementation(libs.compose.animation)
-    implementation(libs.compose.foundation)
-    implementation(libs.compose.runtime)
-    implementation(libs.compose.ui)
-    // Jetpack Compose - Preview
-    implementation(libs.compose.ui.preview)
-    debugImplementation(libs.compose.ui.tooling)
-    // Jetpack Compose - Material 3
-    implementation(libs.compose.material3)
-    implementation(libs.compose.material.icons)
-    // Jetpack Compose - Accompanist
-    implementation(libs.compose.accompanist.permissions)
-    // Lifecycle
-    implementation(libs.lifecycle.viewmodel)
+    // KotlinX
+    implementation(libs.kotlinx.coroutines.guava)
     // Media 3
+    implementation(libs.media3.exoplayer)
     implementation(libs.media3.session)
 }
