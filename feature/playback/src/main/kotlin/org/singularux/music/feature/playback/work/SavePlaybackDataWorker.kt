@@ -30,7 +30,7 @@ class SavePlaybackDataWorker @AssistedInject constructor(
 ) {
 
     companion object {
-        const val TAG = "RestorePlaybackStateWorker"
+        const val TAG = "SavePlaybackStateWorker"
     }
 
     override suspend fun doWork(): Result {

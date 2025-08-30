@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.telephony.TelephonyManager
 import androidx.core.content.ContextCompat
+import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
@@ -13,6 +14,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import dagger.hilt.android.AndroidEntryPoint
 import org.singularux.music.feature.playback.work.RestorePlaybackDataWorker
+import org.singularux.music.feature.playback.work.SavePlaybackDataWorker
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -23,6 +25,7 @@ class MusicPlaybackService : MediaSessionService() {
     }
 
     private var mediaSession: MediaSession? = null
+    private var listener: Player.Listener? = null
     private var pauseWhenCallingBroadcastReceiver: PauseWhenCallingBroadcastReceiver? = null
 
     @Inject lateinit var workManager: WorkManager
@@ -40,6 +43,22 @@ class MusicPlaybackService : MediaSessionService() {
         mediaSession = MediaSession.Builder(this, player)
             .setSessionActivity(pendingIntent)
             .build()
+        // Listen for changes in the session
+        // When the user pauses the playback, the current state is saved
+        listener = object : Player.Listener {
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                if (!isPlaying) {
+                    workManager.enqueueUniqueWork(
+                        uniqueWorkName = SavePlaybackDataWorker.TAG,
+                        existingWorkPolicy = ExistingWorkPolicy.REPLACE,
+                        request = OneTimeWorkRequestBuilder<SavePlaybackDataWorker>()
+                            .addTag(SavePlaybackDataWorker.TAG)
+                            .build()
+                    )
+                }
+            }
+        }
+        mediaSession!!.player.addListener(listener!!)
         // Listen for calls
         val phoneCallIntentFilter = IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED)
         pauseWhenCallingBroadcastReceiver = PauseWhenCallingBroadcastReceiver(mediaSession = mediaSession!!)
@@ -65,6 +84,11 @@ class MusicPlaybackService : MediaSessionService() {
         // Stop listening for calls
         pauseWhenCallingBroadcastReceiver = pauseWhenCallingBroadcastReceiver?.also {
             unregisterReceiver(it)
+            null
+        }
+        // Stop listening for changes in the session
+        listener = listener?.also {
+            mediaSession?.player?.removeListener(it)
             null
         }
         // Destroy session
