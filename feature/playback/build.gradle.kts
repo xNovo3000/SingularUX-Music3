@@ -42,6 +42,7 @@ android {
 dependencies {
     // Project
     api(project(":core:permission"))
+    api(project(":core:playback"))
     api(project(":core:ui"))
     // AndroidX
     implementation(libs.androidx.core)
