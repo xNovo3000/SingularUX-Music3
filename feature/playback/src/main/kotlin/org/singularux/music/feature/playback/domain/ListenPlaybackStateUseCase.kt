@@ -3,7 +3,6 @@ package org.singularux.music.feature.playback.domain
 import android.util.Log
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
-import androidx.media3.common.Timeline
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.onFailure
@@ -11,7 +10,7 @@ import kotlinx.coroutines.channels.onSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
-import org.singularux.music.core.playback.MusicControllerFacade
+import org.singularux.music.feature.playback.foreground.MusicControllerFacade
 import org.singularux.music.feature.playback.model.PlaybackState
 import javax.inject.Inject
 

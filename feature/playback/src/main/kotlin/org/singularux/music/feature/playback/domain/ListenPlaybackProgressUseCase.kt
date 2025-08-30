@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.singularux.music.core.playback.MusicControllerFacade
+import org.singularux.music.feature.playback.foreground.MusicControllerFacade
 import org.singularux.music.feature.playback.model.PlaybackProgress
 import javax.inject.Inject
 import kotlin.math.max

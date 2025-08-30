@@ -1,4 +1,4 @@
-package org.singularux.music.core.playback
+package org.singularux.music.feature.playback
 
 import android.content.Context
 import dagger.Module
@@ -10,10 +10,11 @@ import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import org.singularux.music.feature.playback.foreground.MusicControllerFacade
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
-object CorePlaybackModule {
+object FeaturePlaybackModule {
 
     @Provides
     @ActivityRetainedScoped

@@ -10,7 +10,7 @@ import kotlinx.coroutines.channels.onSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
-import org.singularux.music.core.playback.MusicControllerFacade
+import org.singularux.music.feature.playback.foreground.MusicControllerFacade
 import org.singularux.music.feature.playback.model.PlaybackMetadata
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds

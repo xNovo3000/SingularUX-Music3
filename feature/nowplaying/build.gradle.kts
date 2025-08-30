@@ -41,7 +41,6 @@ android {
 
 dependencies {
     // Project
-    api(project(":core:playback"))
     api(project(":core:ui"))
     api(project(":feature:playback"))
     // AndroidX

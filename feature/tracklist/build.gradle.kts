@@ -42,7 +42,6 @@ android {
 dependencies {
     // Project
     api(project(":core:permission"))
-    api(project(":core:playback"))
     api(project(":core:ui"))
     api(project(":data:library"))
     api(project(":feature:playback"))
