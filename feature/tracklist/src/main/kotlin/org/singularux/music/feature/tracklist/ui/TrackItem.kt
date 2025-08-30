@@ -61,6 +61,7 @@ fun TrackItem(
         modifier = modifier,
         state = state,
         backgroundContent = { TrackItemBackground() },
+        enableDismissFromEndToStart = false,
         onDismiss = {
             onAction(TrackItemAction.ADD_TO_QUEUE)
             coroutineScope.launch { state.reset() }
