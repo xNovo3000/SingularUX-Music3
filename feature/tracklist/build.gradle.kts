@@ -45,6 +45,7 @@ dependencies {
     api(project(":core:playback"))
     api(project(":core:ui"))
     api(project(":data:library"))
+    api(project(":feature:playback"))
     // AndroidX
     implementation(libs.androidx.core)
     implementation(libs.androidx.core.splashscreen)

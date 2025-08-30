@@ -15,11 +15,11 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.singularux.music.core.permission.MusicPermission
+import org.singularux.music.feature.playback.domain.ListenPlaybackMetadataUseCase
+import org.singularux.music.feature.playback.domain.ListenPlaybackProgressUseCase
+import org.singularux.music.feature.playback.domain.ListenPlaybackStateUseCase
 import org.singularux.music.feature.tracklist.domain.GetPlatformPermissionStringUseCase
 import org.singularux.music.feature.tracklist.domain.GetTrackListByNameUseCase
-import org.singularux.music.feature.tracklist.domain.ListenPlaybackMetadataUseCase
-import org.singularux.music.feature.tracklist.domain.ListenPlaybackProgressUseCase
-import org.singularux.music.feature.tracklist.domain.ListenPlaybackStateUseCase
 import org.singularux.music.feature.tracklist.domain.ListenTrackListUseCase
 import org.singularux.music.feature.tracklist.domain.TimelineOverrideUseCase
 import org.singularux.music.feature.tracklist.domain.ActionPauseMusicUseCase
@@ -51,7 +51,7 @@ class TrackListViewModel @Inject constructor(
         withContext(Dispatchers.Default) {
             trackList.map {
                 it.copy(
-                    isCurrentlyPlaying = maybePlaybackMetadata?.playingFromExtra == "tracks/${it.id}"
+                    isCurrentlyPlaying = maybePlaybackMetadata?.playingFrom == "tracks/${it.id}"
                 )
             }
         }
@@ -65,7 +65,7 @@ class TrackListViewModel @Inject constructor(
             withContext(Dispatchers.Default) {
                 searchTrackList.map {
                     it.copy(
-                        isCurrentlyPlaying = maybePlaybackMetadata?.playingFromExtra == "search/${it.id}"
+                        isCurrentlyPlaying = maybePlaybackMetadata?.playingFrom == "search/${it.id}"
                     )
                 }
             }

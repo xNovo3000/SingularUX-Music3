@@ -26,11 +26,10 @@ class ListenPlaybackStateUseCase @Inject constructor(
     operator fun invoke(): Flow<PlaybackState> = callbackFlow {
         // Wait for MediaController to become available
         val mediaController = musicControllerFacade.mediaControllerDeferred.await()
-        // We should listen for play/pause button, item transition and change to the timeline
+        // We should listen for play/pause button and media item transition
         val listener = object : Player.Listener {
             override fun onIsPlayingChanged(isPlaying: Boolean) = update()
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) = update()
-            override fun onTimelineChanged(timeline: Timeline, reason: Int) = update()
             fun update() {
                 val playbackState = PlaybackState(
                     isEnabled = mediaController.currentMediaItem != null,
