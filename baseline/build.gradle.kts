@@ -14,9 +14,10 @@ android {
     compileSdk = 36
     buildToolsVersion = "36.0.0"
     defaultConfig {
-        minSdk = 28
+        minSdk = 33
         targetSdk = 36
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments["androidx.benchmark.suppressErrors"] = "EMULATOR"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

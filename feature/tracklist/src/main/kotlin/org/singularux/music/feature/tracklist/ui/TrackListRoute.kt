@@ -22,7 +22,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -45,7 +48,9 @@ fun TrackListRoute(
     val snackbarReadPhoneActionString = stringResource(R.string.tracklist_snackbar_read_phone_action)
     val snackbarAddedToQueueFeedback = stringResource(R.string.tracklist_snackbar_added_to_queue_feedback)
     Scaffold(
-        modifier = Modifier.nestedScroll(searchBarScrollBehavior.nestedScrollConnection),
+        modifier = Modifier
+            .semantics { testTagsAsResourceId = true }
+            .nestedScroll(searchBarScrollBehavior.nestedScrollConnection),
         topBar = {
             val searchBarState = rememberSearchBarState()
             val inputField = @Composable {
@@ -55,6 +60,7 @@ fun TrackListRoute(
                 )
             }
             TrackListSearchBarCollapsed(
+                modifier = Modifier.testTag("track_list_search"),
                 state = searchBarState,
                 inputField = inputField,
                 scrollBehavior = searchBarScrollBehavior
@@ -91,6 +97,7 @@ fun TrackListRoute(
         bottomBar = {
             val playbackData by viewModel.playbackData.collectAsStateWithLifecycle()
             TrackListBottomBar(
+                modifier = Modifier.testTag("track_list_bottom_bar"),
                 data = playbackData,
                 onAction = { action ->
                     when (action) {
@@ -137,6 +144,7 @@ fun TrackListRoute(
             val layoutDirection = LocalLayoutDirection.current
             val trackList by viewModel.trackList.collectAsStateWithLifecycle()
             TrackListContent(
+                modifier = Modifier.testTag("track_list_content"),
                 contentPadding = PaddingValues(
                     start = innerPadding.calculateStartPadding(layoutDirection),
                     top = innerPadding.calculateTopPadding(),
