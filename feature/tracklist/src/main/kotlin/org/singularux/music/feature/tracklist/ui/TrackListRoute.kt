@@ -81,9 +81,7 @@ fun TrackListRoute(
         },
         floatingActionButton = {
             val expanded by remember {
-                derivedStateOf {
-                    contentState.lastScrolledBackward || contentState.firstVisibleItemIndex == 0
-                }
+                derivedStateOf { contentState.firstVisibleItemIndex == 0 }
             }
             TrackListFab(
                 expanded = expanded,
