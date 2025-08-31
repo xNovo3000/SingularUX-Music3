@@ -14,7 +14,7 @@ import org.singularux.music.feature.playback.foreground.MusicControllerFacade
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
-object FeaturePlaybackModule {
+object FeaturePlaybackActivityRetainedModule {
 
     @Provides
     @ActivityRetainedScoped

@@ -3,12 +3,14 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.room)
 }
 
 android {
-    namespace = "org.singularux.music.feature.playback"
+    namespace = "org.singularux.music.data.playbackstate"
     compileSdk = 36
     buildToolsVersion = "36.0.0"
     defaultConfig {
@@ -33,11 +35,12 @@ android {
             jvmTarget = JvmTarget.JVM_11
         }
     }
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
 }
 
 dependencies {
-    // Project
-    api(project(":data:playbackstate"))
     // AndroidX
     implementation(libs.androidx.core)
     // DataStore
@@ -45,13 +48,9 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    implementation(libs.hilt.ext.work)
-    ksp(libs.hilt.ext.compiler)
     // KotlinX
-    implementation(libs.kotlinx.coroutines.guava)
-    // Media 3
-    implementation(libs.media3.exoplayer)
-    implementation(libs.media3.session)
-    // Work
-    implementation(libs.work.runtime)
+    implementation(libs.kotlinx.serialization.json)
+    // Room
+    implementation(libs.room.android)
+    ksp(libs.room.compiler)
 }

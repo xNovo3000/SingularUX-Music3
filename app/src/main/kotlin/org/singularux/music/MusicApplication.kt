@@ -1,19 +1,24 @@
 package org.singularux.music
 
 import android.app.Application
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
 import coil3.ImageLoader
 import coil3.PlatformContext
 import coil3.SingletonImageLoader
 import coil3.memory.MemoryCache
 import coil3.request.CachePolicy
 import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
 @HiltAndroidApp
-class MusicApplication : Application(), SingletonImageLoader.Factory {
+class MusicApplication : Application(), SingletonImageLoader.Factory, Configuration.Provider {
 
     companion object {
         private const val ARTWORK_MAX_SIZE_PERCENTAGE = 0.15
     }
+
+    @Inject lateinit var hiltWorkerFactory: HiltWorkerFactory
 
     override fun newImageLoader(context: PlatformContext): ImageLoader {
         return ImageLoader.Builder(context = context)
@@ -26,5 +31,11 @@ class MusicApplication : Application(), SingletonImageLoader.Factory {
             }
             .build()
     }
+
+    // Do not remove get() otherwise @Inject does not work!
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setWorkerFactory(hiltWorkerFactory)
+            .build()
 
 }

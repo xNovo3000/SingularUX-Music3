@@ -63,6 +63,8 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation)
+    implementation(libs.hilt.ext.work)
+    ksp(libs.hilt.ext.compiler)
     // Jetpack Compose
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.animation)
@@ -76,4 +78,6 @@ dependencies {
     // Navigation 3
     implementation(libs.navigation3.runtime)
     implementation(libs.navigation3.ui)
+    // Work
+    implementation(libs.work.runtime)
 }
