@@ -75,6 +75,7 @@ class RestorePlaybackDataWorker @AssistedInject constructor(
         withContext(Dispatchers.Main) {
             mediaController.setMediaItems(mediaItems)
             mediaController.seekTo(position.index, position.positionMs)
+            mediaController.prepare()
         }
         Log.d(TAG, "Updated media items and seek position")
         // Release controller and return success
