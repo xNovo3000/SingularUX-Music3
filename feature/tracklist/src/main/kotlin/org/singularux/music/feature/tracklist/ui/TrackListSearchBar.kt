@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.launch
@@ -70,6 +71,7 @@ fun TrackListSearchBarInputField(
                 }
                 SearchBarValue.Expanded -> {
                     IconButton(
+                        modifier = Modifier.testTag("track_list_search_back"),
                         onClick = {
                             textFieldState.setTextAndPlaceCursorAtEnd("")
                             coroutineScope.launch { searchBarState.animateToCollapsed() }

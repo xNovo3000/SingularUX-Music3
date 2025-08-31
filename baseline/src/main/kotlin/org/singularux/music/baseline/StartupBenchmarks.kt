@@ -7,6 +7,9 @@ import androidx.benchmark.macro.StartupTimingMetric
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import androidx.test.uiautomator.Direction
+import androidx.test.uiautomator.uiAutomator
+import androidx.test.uiautomator.watcher.PermissionDialog
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -33,12 +36,24 @@ class StartupBenchmarks {
             compilationMode = compilationMode,
             startupMode = StartupMode.COLD,
             iterations = 10,
-            setupBlock = {
-                pressHome()
-            },
+            setupBlock = { pressHome() },
             measureBlock = {
                 startActivityAndWait()
-                // TODO Add interactions to wait for when your app is fully drawn.
+                uiAutomator {
+                    // Accept the permissions
+                    watchFor(PermissionDialog) { clickAllow() }
+                    // Click on first track
+                    onElementOrNull { viewIdResourceName == "track_item_0" }?.click()
+                    // Click on search bar and return back
+                    onElement { viewIdResourceName == "track_list_search" }.click()
+                    pressBack()
+                    // Scroll list of tracks
+                    onElement { viewIdResourceName == "track_list_content" }
+                        .scroll(Direction.DOWN, 1F)
+                    // Click on bottom bar and go to playback screen
+                    onElement { viewIdResourceName == "track_list_bottom_bar" }
+                        .click()
+                }
             }
         )
     }
