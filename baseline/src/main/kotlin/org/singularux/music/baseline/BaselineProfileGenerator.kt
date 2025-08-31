@@ -25,6 +25,7 @@ class BaselineProfileGenerator {
         ) {
             pressHome()
             startActivityAndWait()
+            /*  TODO: Fix this not working
             uiAutomator {
                 // Accept the permissions
                 watchFor(PermissionDialog) { clickAllow() }
@@ -40,6 +41,7 @@ class BaselineProfileGenerator {
                 onElement { viewIdResourceName == "track_list_bottom_bar" }
                     .click()
             }
+            */
         }
     }
 }

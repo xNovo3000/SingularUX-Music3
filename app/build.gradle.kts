@@ -43,6 +43,9 @@ android {
             jvmTarget = JvmTarget.JVM_11
         }
     }
+    baselineProfile {
+        automaticGenerationDuringBuild = true
+    }
 }
 
 dependencies {
